@@ -24,7 +24,7 @@ var World = function World(callback) {
         console.trace('Spooky.listen failed');
     }
 
-    spooky.debug = true;
+    spooky.debug = false;
 
     // track errors
     spooky.errors = [];

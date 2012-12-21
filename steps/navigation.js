@@ -2,7 +2,11 @@ module.exports = function () {
     this.World = require('../support/world.js').World;
 
     function go(url, callback) {
-        this.spooky.thenOpen(this.baseUrl + url);
+        if(/^https?:\/\//.test(url)) {
+            this.spooky.thenOpen(url);
+        } else {
+            this.spooky.thenOpen(this.baseUrl + url);
+        }
         callback();
     }
 
