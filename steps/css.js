@@ -1,10 +1,7 @@
 module.exports = function () {
     this.World = require('../support/world.js').World;
 
-    selectors = {
-        "Main title": "h1",
-        "Page body": "body"
-    };
+    var selectors = require('../selectors.json');
 
     var camelize = function (str) {
         return str.replace(/[\s\-](\w)/g, function(str, letter){
@@ -42,27 +39,33 @@ module.exports = function () {
     // js-imagediff to calculate diffs
     this.Then(/^the "([^"]*)" should look the same$/, compareImages);
     function compareImages(elementName, callback) {
-        var elementSelector = selectors[elementName];
+        var elementSelector = selectors[elementName] || elementName;
 
         this.spooky.then([{
             elementSelector: elementSelector
         }, function () {
             var casper = this,
                 testUrl = this.getCurrentUrl(),
-                css = require('./examples/cucumber/features/support/phantomcss.js');
+                css = require('./GhostStory/lib/PhantomCSS/phantomcss.js');
 
             css.init({
                 casper: casper,
-                screenshotRoot: './screenshots',
-                libraryRoot: './examples/cucumber/features/support',
-                testRunnerUrl: './examples/cucumber/features/support/testRunner.html'
+                screenshotRoot: './GhostStory/screenshots',
+                libraryRoot: './GhostStory/lib/PhantomCSS',
+                testRunnerUrl: './GhostStory/support/testRunner.html'
             });
-            css.screenshot('body');
-            css.compareAll();
-            this.test.assertEquals(css.getExitStatus(), 0, testUrl + " does not match the previous test run");
+            casper.
+              then(function(){
+                    css.screenshot(elementSelector);
+                  }).
+              then(function(){
+                    css.compareAll();
+                  }).
+              then(function () {
+                    this.test.assertEquals(css.getExitStatus(), 0, testUrl + " matches the previous test run");
+                  });
         }]);
-
-        callback();
+       callback();
     }
 
     /* To save future confusion:

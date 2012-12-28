@@ -1,5 +1,5 @@
 var util = require('util');
-var Spooky = require('../../../../lib/spooky');
+var Spooky = require('../../lib/spooky');
 
 var World = function World(callback) {
     var spooky;
@@ -24,7 +24,7 @@ var World = function World(callback) {
         console.trace('Spooky.listen failed');
     }
 
-    spooky.debug = false;
+   //spooky.debug = true;
 
     // track errors
     spooky.errors = [];
