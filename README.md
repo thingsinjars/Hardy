@@ -18,6 +18,9 @@ Read more about CSS testing at http://csste.st/ or read the slides introducing G
 Installation
 ====
 
+The easiest way to install and run this is to use [this modified version of SpookyJS](https://github.com/thingsinjars/SpookyJS). Feel free to carry on with the steps below instead, however.
+
+
   This includes a fork of [PhantomCSS](http://github.com/thingsinjars/PhantomCSS) as a submodule. To pull it in, check this project out using 
 
       git clone --recursive git://github.com/thingsinjars/GhostStory.git
