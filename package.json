@@ -1,0 +1,22 @@
+{
+
+    "name": "Hardy",
+    "version": "0.0.2",
+    "description": "Collection of steps to run CSS tests using Cucumber and Selenium",
+    "homepage": "http://csste.st/tools/ghoststory",
+    "keywords": [ "cucumber", "selenium", "automated", "test" ],
+    "maintainers": [
+        {
+            "name": "Simon Madine",
+            "email": "simon@thingsinjars.com",
+            "web": "http://thingsinjars.com" 
+        } 
+    ],
+    "licenses": [ { "type": "MIT", "url": "http://thingsinjars.mit-license.org/" } ],
+    "repositories": [ { "type": "git", "url": "http://github.com/thingsinjars/GhostStory" } ],
+
+    "devDependencies" : {
+        "cucumber": "latest",
+        "webdriverjs": "latest"
+    }
+}

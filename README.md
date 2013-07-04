@@ -1,39 +1,88 @@
-GhostStory
+GhostStory 2: The Ghostening
 ===
 
-A collection of cucumber steps for automated CSS testing with [SpookyJS](https://github.com/WaterfallEngineering/SpookyJS), [CasperJS](http://casperjs.org/), [PhantomJS](http://phantomjs.org/), [PhantomCSS](http://github.com/Huddle/PhantomCSS) and [Node.JS](http://nodejs.org/).
+GhostStory is a collection of CSS testing steps and a boilerplate testing setup to get you up-and-running with automated CSS testing as quickly as possible. Tests are written in Cucumber and use Selenium. GhostStory runs on Node.js and therefore all the example CSS test helpers are written in JS. The functionality behind them can easily be reused in any test setup, whether your tests are written in Java, Ruby or anything else.
 
-Steps
+This is a refactor of the original GhostStory to run against Selenium using WebDriverJS. The original collection of CSS testing steps were written specifically for CasperJS and PhantomJS but now that PhantomJS supports the WebDriver protocol, we're now going via Selenium so that tests can be run against any browser.
+
+The structure of this project and the webdriverjs bindings are from (WebDriverJS)[https://github.com/camme/webdriverjs]
+
+Dependencies
+---
+
+### Selenium
+
+Makes the whole thing go.
+
+### PhantomJS
+
+Aside from being extremely handy as a potential test browser, GhostStory relies on PhantomJS for its image processing. If you aren't planning on doing any image diff tests, you can skip it.
+
+---
+
+## CSS test steps available:
+
+### Then "element" should have "CSS property" of "value"
+
+Measures the current value of the property and asserts against the expected value
+
+### Then "element" should have "CSS property" of [more|greater|less] than "value"
+
+Measures the current value of the property and compares against the expected value
+
+### Then "element" should look the same as before
+
+Renders an image of the element for image diff testing. The first time this step is used, it will fail and generate a base reference image.
+
+## CSS test steps to be made:
+
+### Then "element" should have "CSS property" of "value" or "value" [or "value"]*
+
+## General steps available:
+
+### Given the window size is "width" by "height"
+
+### Given I visit "(https?:\/\/.*\..*)"
+
+### When I enter "text" into "selector"
+
+### When I submit the form "selector"
+
+### Then I should see "text" in the element "selector"
+
+There are obviously many more generic steps missed but they should be straightforward to add.
+
+## Custom Steps
+
+Add these in a module in the `features/step_definitions` folder.
+
+
+Using
 ===
 
-The steps implemented so far cover basic calculated styles and image diffs.
+Start selenium
 
-    Then the "Element descriptor" should have "property" of "value"
-    Then the "Element descriptor" should look the same as before
+    java -jar bin/selenium-server-standalone-2.32.0.jar
 
-Here, "Element descriptor" is the human-readable name of the element you are testing. These are mapped to CSS selectors in the 'selectors.json' file
+This should work with any recent version of Selenium. I've only tested with 2.32 so far.
 
-Read more about CSS testing at http://csste.st/ or read the slides introducing GhostStory at http://csste.st/slides/
+Specify test properties in the file `features/support/testproperties.js` or explicitly on the command-line.
 
-Installation
-====
+    ./node_modules/cucumber/bin/cucumber.js --browser=phantomjs
+    ./node_modules/cucumber/bin/cucumber.js --browser=chrome
+    ./node_modules/cucumber/bin/cucumber.js --browser='internet explorer'
 
-The easiest way to install and run this is to use [this modified version of SpookyJS](https://github.com/thingsinjars/SpookyJS). Feel free to carry on with the steps below instead, however.
+Note: If you want to test in chrome, you'll also need the ChromeDriver package. Consult the Selenium wiki for more.
+
+Uses the selectors/selectors.js files to map human descriptions of elements to CSS selectors
+
+## File structure
 
 
-  This includes a fork of [PhantomCSS](http://github.com/thingsinjars/PhantomCSS) as a submodule. To pull it in, check this project out using 
 
-      git clone --recursive git://github.com/thingsinjars/GhostStory.git
-
-
-  1. Download SpookyJS
-     1. `git clone https://github.com/WaterfallEngineering/SpookyJS.git`
-
-  2. Install SpookyJS dependencies
-     1. `cd SpookyJS`
-     2. `npm install`
-
-  3. Copy the folders from GhostStory into `SpookyJS/Examples/cucumber/features/`
-
-  4. Run the cucumber.js make step
-     1. `make cucumber.js`
+  * features/*.feature - the story files you want to run.
+  * support/teardown.js - closes the browser after each scenario
+  * support/testproperties.json - Configuration stuffs
+  * support/world.js - This is the bootstrapper for WebDriverJS, be careful!
+  * step_definitions/generic.js - Good place to keep testwide step definitions, such as "I click <id>"
+  * step_definitions/*.js - Other step definitions, ideally you should have a 1-1 relationship between feature file and specific definitions as the complimentary .js file
