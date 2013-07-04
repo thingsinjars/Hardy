@@ -1,0 +1,7 @@
+{
+    "logLevel": "none",
+
+    "host": "localhost",
+
+    "browser": "chrome"
+}

@@ -1,3 +1,11 @@
-[submodule "lib/PhantomCSS"]
-	path = lib/PhantomCSS
-	url = https://github.com/thingsinjars/PhantomCSS.git
+[submodule "bin/GhostDiff"]
+	path = bin/GhostDiff
+	url = https://github.com/thingsinjars/GhostDiff.git
+
+[submodule "bin/GhostKnife"]
+	path = bin/GhostKnife
+	url = https://github.com/thingsinjars/GhostKnife.git
+
+[submodule "bin/HardyChrome"]
+	path = bin/HardyChrome
+	url = https://github.com/thingsinjars/HardyChrome.git
