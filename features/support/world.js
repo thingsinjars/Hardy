@@ -34,7 +34,7 @@ module.exports = function(callback) {
         });
 
         // Implement a command to ask Selenium to resize the browser window
-        // Remove this when WebDriverJS supports this.
+        // Remove when WebDriverJS supports this.
         browser.addCommand("setWindowSize", function(width, height, callback) {
             this.windowHandleSize({
                 width: width || 1024,

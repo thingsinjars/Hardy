@@ -1,5 +1,5 @@
 {
-    "logLevel": "none",
+    "logLevel": "silent",
 
     "host": "localhost",
 
