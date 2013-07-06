@@ -1,0 +1,84 @@
+#!/usr/bin/env node
+
+//Usage:
+//hardy --browser=chrome,phantomjs,ie features/
+
+var http = require("http"),
+    spawn = require('child_process').spawn,
+    VERSION = require('../package.json').version,
+    PROPERTIES = {
+        "browser": "firefox"
+    },
+    browsersToTest,
+    testFolder,
+    path, numberOfRuns, currentRun,
+    exitCode;
+
+console.log('Hardy v' + VERSION);
+
+http.get("http://127.0.0.1:4444/wd/hub", function(res) {
+    console.log("Selenium is running " + res.statusCode);
+}).on('error', function(e) {
+  console.log("Selenium not running " + e.message);
+});
+
+
+if (process.argv.length >= 3) {
+
+    process.argv.forEach(function(arg) {
+        arg = arg.match(/^--([A-Za-z]+)=(.*)/);
+
+        // Only look for --[PROPERTY] style args, everything else can be forgotten
+        if (arg === null || !arg[1]) return;
+
+
+        // If the JSON file has the argument to override, then override it.
+        if (PROPERTIES.hasOwnProperty(arg[1])) {
+            PROPERTIES[arg[1]] = arg[2];
+
+            // Otherwise proclaim that it is an unrecognised argument
+        } else {
+            console.log('Unrecognised argument ' + arg[1]);
+        }
+
+    });
+
+    testFolder = process.argv[process.argv.length - 1];
+    browsersToTest = PROPERTIES.browser.split(',');
+    path = require('path').dirname(require.main.filename) + '/../';
+    numberOfRuns = browsersToTest.length;
+    currentRun = 0;
+    exitCode = 0;
+
+    browsersToTest.forEach(function(browser) {
+        console.log(path + 'node_modules/.bin/cucumber.js', ["-f=progress", "-r=" + path + 'features/', "--browser=" + browser, process.cwd() + '/' + testFolder]);
+        var testRun = spawn(path + 'node_modules/.bin/cucumber.js', ["-f=progress", "-r=" + path + 'features/', "--browser=" + browser, process.cwd() + '/' + testFolder]);
+        testRun.on('data', function (data) {
+          console.log('stdout: ' + data);
+        });
+        testRun.on('exit', makeNext(browser));
+    });
+} else {
+    usage();
+}
+
+function usage() {
+    console.log('Usage:');
+    console.log('hardy --browser=chrome,phantomjs,ie features/');
+}
+
+function makeNext(browser) {
+    return function next(code) {
+        exitCode += code;
+        currentRun++;
+        if (code === 0) {
+            // Add Browser name here
+            console.log(browser + ' success');
+        } else {
+            console.log(browser + ' fail');
+        }
+        if (currentRun == numberOfRuns) {
+            process.exit(exitCode);
+        }
+    };
+}

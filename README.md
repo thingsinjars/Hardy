@@ -1,11 +1,16 @@
-GhostStory 2: The Ghostening
+Hardy
 ===
 
-GhostStory is a collection of CSS testing steps and a boilerplate testing setup to get you up-and-running with automated CSS testing as quickly as possible. Tests are written in Cucumber and use Selenium. GhostStory runs on Node.js and therefore all the example CSS test helpers are written in JS. The functionality behind them can easily be reused in any test setup, whether your tests are written in Java, Ruby or anything else.
+GhostStory 2: The Ghostening
+---
 
-This is a refactor of the original GhostStory to run against Selenium using WebDriverJS. The original collection of CSS testing steps were written specifically for CasperJS and PhantomJS but now that PhantomJS supports the WebDriver protocol, we're now going via Selenium so that tests can be run against any browser.
+Hardy (formerly GhostStory) is a collection of CSS testing steps and a boilerplate testing setup to get you up-and-running with automated CSS testing as quickly as possible. Tests are written in Cucumber and use Selenium. Hardy runs on Node.js and therefore all the example CSS test helpers are written in JS. The functionality behind them can easily be reused in any test setup, whether your tests are written in Java, Ruby or anything else.
 
-The structure of this project and the webdriverjs bindings are from (WebDriverJS)[https://github.com/camme/webdriverjs]
+This is a refactor of the original GhostStory project to run against Selenium using WebDriverJS. The original collection of CSS testing steps were written specifically for CasperJS and PhantomJS but now that PhantomJS supports the WebDriver protocol, we're now going via Selenium so that tests can be run against any browser.
+
+The structure of this project and the webdriverjs bindings are from [WebDriverJS](https://github.com/camme/webdriverjs).
+
+![image](extra/assets/small-logo.png)
 
 Dependencies
 ---
@@ -22,33 +27,33 @@ Aside from being extremely handy as a potential test browser, GhostStory relies 
 
 ## CSS test steps available:
 
-### Then "element" should have "CSS property" of "value"
+### `Then "element" should have "CSS property" of "value"`
 
 Measures the current value of the property and asserts against the expected value
 
-### Then "element" should have "CSS property" of [more|greater|less] than "value"
+### `Then "element" should have "CSS property" of [more|greater|less] than "value"`
 
 Measures the current value of the property and compares against the expected value
 
-### Then "element" should look the same as before
+### `Then "element" should look the same as before`
 
 Renders an image of the element for image diff testing. The first time this step is used, it will fail and generate a base reference image.
 
 ## CSS test steps to be made:
 
-### Then "element" should have "CSS property" of "value" or "value" [or "value"]*
+### `Then "element" should have "CSS property" of "value" or "value" [or "value"]*`
 
 ## General steps available:
 
-### Given the window size is "width" by "height"
+### `Given the window size is "width" by "height"`
 
-### Given I visit "(https?:\/\/.*\..*)"
+### `Given I visit "(https?:\/\/.*\..*)"`
 
-### When I enter "text" into "selector"
+### `When I enter "text" into "selector"`
 
-### When I submit the form "selector"
+### `When I submit the form "selector"`
 
-### Then I should see "text" in the element "selector"
+### `Then I should see "text" in the element "selector"`
 
 There are obviously many more generic steps missed but they should be straightforward to add.
 

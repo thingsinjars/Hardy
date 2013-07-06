@@ -76,13 +76,14 @@ function captureSelector(filename, selector, callback) {
                     }
 
                     // Spawn a separate process to crop the image to the size and position of the element
+                    console.log(process.cwd() + '/bin/GhostKnife/ghostknife', [tempFile, where.x, where.y, size.width, size.height, 3000, 10000, filename]);
                     var spawn = require('child_process').spawn,
                     imgcrp = spawn(process.cwd() + '/bin/GhostKnife/ghostknife', [tempFile, where.x, where.y, size.width, size.height, 3000, 10000, filename]);
                     imgcrp.on('exit', function(code) {
                         if (code === 0) {
                             callback(null, {status: /\.diff\./.test(filename)?'success':'firstrun', value: filename});
                         } else {
-                            callback.fail(new Error(code));
+                            callback(new Error(code));
                         }
                     });
 
