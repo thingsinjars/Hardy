@@ -27,9 +27,11 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="brand" href="#">Project name</a>
               <div class="nav-collapse collapse pull-right">
                 <ul class="nav">
+                  <li><a href="/getting-started"><i class="icon-arrow-right"></i><span>Getting Started</span></a></li>
+                  <li><a href="/plugins"><i class="icon-power-cord"></i><span>Plugins</span></a></li>
+                  <li><a href="/getting-started"><i class="icon-document-alt-stroke"></i><span>Documentation</span></a></li>
                   <li class="active"><a href="#">Download</a></li>
                 </ul>
               </div><!--/.nav-collapse -->
@@ -47,7 +49,6 @@
                 <h1>Hardy</h1>
                 <h2>Automated CSS testing</h2>
                 <p>Hardy introduces some much-needed rigour into layout testing.</p>
-                <p><a href="#" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
               </div>
             </div>
           </div>
@@ -58,21 +59,29 @@
           <!-- Example row of columns -->
           <div class="row">
             <div class="span4">
-              <h2>Download</h2>
+              <h2>Latest versions</h2>
               <ul>
-                <li><a href="https://github.com/thingsinjars/Hardy/">Stable: 0.2.0</a></li>
+                <li><a href="https://github.com/thingsinjars/GhostStory/tree/webdriver">Command-line: 0.0.2</a></li>
+                <li><a href="https://github.com/thingsinjars/HardyChrome">Chrome extension: 0.1</a></li>
               </ul>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn" href="#">View details &raquo;</a></p>
+              <h2>Installation</h2>
+              <p>Recommended installation via <a href="https://npmjs.org/package/hardy" title="hardy">npm</a></p>
+              <p><code>npm install -g hardy</code></p>
+              <h2>Chrome extension</h2>
+              <p>In order to simplify test creation, there's a chrome devtools extension that lets you click around your page and outputs Hardy-compatible cucumber files.</p>
+              <p><a class="btn" href="http://csste.st/">Find out more &raquo;</a></p>
             </div>
             <div class="span4">
               <h2>What is CSS testing?</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn" href="#">View details &raquo;</a></p>
+              <p>Tests that make sure your visual layout is as sturdy as your javascript. After your page looks the way you want it to, create a few test cases of key styles. During your automated build, run those tests to ensure everything looks as it should.</p>
+
+              <!-- <p>To find out more, visit <a href="http://csste.st/">csste.st</a></p> -->
+
+              <p><a class="btn" href="http://csste.st/">Find out more &raquo;</a></p>
            </div>
             <div class="span4">
               <h2>What is Hardy?</h2>
-              <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+              <p>A command-line tool that simplifies CSS testing by using <a href="http://cukes.info/" title="Cucumber - Making BDD fun">Cucumber</a> and makes it simple to include in your automated build process. There's also a chrome extension to simplify making test cases. It runs on <a href="http://nodejs.org/" title="node.js">Node.JS</a> and uses <a href="http://docs.seleniumhq.org/" title="Selenium - Web Browser Automation">Selenium</a>.</p>
               <p><a class="btn" href="#">View details &raquo;</a></p>
             </div>
           </div>
@@ -80,7 +89,7 @@
           <hr>
 
           <footer>
-            <p>&copy; Company 2013</p>
+            <p>Hardy is a project by <a href="http://thingsinjars.com/">Simon Madine</a>.</p>
           </footer>
 
         </div> <!-- /container -->

@@ -14,10 +14,13 @@ $iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
     font-style: normal;
 
 }
-
+h1,h2,h3 {
+    font-weight: 200;
+    color: #5e7270;
+}
 .hero-unit {
-    margin: 40px auto 0 auto;
-    background: #5e7270;
+    margin: 40px auto;
+    background: #5e7270 url(../images/bg.png);
 }
 .hero-unit h1, .hero-unit h2, .hero-unit p {
 	color:white;
@@ -30,5 +33,7 @@ $iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
 }
 
 .logo {
-	background: url(../images/logo.png);
+	background: url(../images/logo.png) 50% 50% no-repeat;
+    height: 336px;
+    margin-top: -40px;
 }
