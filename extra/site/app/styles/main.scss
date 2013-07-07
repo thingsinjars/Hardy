@@ -17,7 +17,7 @@ $iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
 
 .hero-unit {
     margin: 40px auto 0 auto;
-    background: #5e7270; 
+    background: #5e7270;
 }
 .hero-unit h1, .hero-unit h2, .hero-unit p {
 	color:white;
@@ -27,4 +27,8 @@ $iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
 	font-family: 'keep_calmmedium', "Gill Sans", Avenir, sans-serif;
 	letter-spacing: 1px;
 	text-transform: uppercase;
+}
+
+.logo {
+	background: url(../images/logo.png);
 }

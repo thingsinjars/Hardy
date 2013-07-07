@@ -1,22 +1,32 @@
 {
 
-    "name": "Hardy",
+    "name": "hardy",
     "version": "0.0.2",
-    "description": "Collection of steps to run CSS tests using Cucumber and Selenium",
-    "homepage": "http://csste.st/tools/ghoststory",
-    "keywords": [ "cucumber", "selenium", "automated", "test" ],
-    "maintainers": [
-        {
-            "name": "Simon Madine",
-            "email": "simon@thingsinjars.com",
-            "web": "http://thingsinjars.com" 
-        } 
+    "description": "A collection of steps to run CSS tests using Cucumber and Selenium",
+    "homepage": "http://hardy.io/",
+    "bugs": {
+        "url": "https://github.com/thingsinjars/GhostStory/issues"
+    },
+    "keywords": ["cucumber", "selenium", "automated", "css", "test"],
+    "author": {
+        "name": "Simon Madine",
+        "email": "simon@thingsinjars.com",
+        "web": "http://thingsinjars.com"
+    },
+    "bin": {
+        "hardy": "./bin/hardy"
+    },
+    "licenses": [{
+            "type": "MIT",
+            "url": "http://thingsinjars.mit-license.org/"
+        }
     ],
-    "licenses": [ { "type": "MIT", "url": "http://thingsinjars.mit-license.org/" } ],
-    "repositories": [ { "type": "git", "url": "http://github.com/thingsinjars/GhostStory" } ],
-
-    "devDependencies" : {
-        "cucumber": "latest",
-        "webdriverjs": "latest"
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/thingsinjars/GhostStory.git"
+    },
+    "dependencies": {
+        "cucumber": "0.3.0",
+        "webdriverjs": "0.7.8"
     }
 }
