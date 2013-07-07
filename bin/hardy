@@ -17,9 +17,9 @@ var http = require("http"),
 console.log('Hardy v' + VERSION);
 
 http.get("http://127.0.0.1:4444/wd/hub", function(res) {
-    console.log("Selenium is running " + res.statusCode);
+    console.log("Selenium is running: " + res.statusCode);
 }).on('error', function(e) {
-  console.log("Selenium not running " + e.message);
+  console.log("Selenium not running: " + e.message);
 });
 
 
