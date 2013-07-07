@@ -3,6 +3,28 @@ $iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
 
 @import 'sass-bootstrap/lib/bootstrap';
 
+@font-face {
+    font-family: 'keep_calmmedium';
+    src: url('../fonts/keepcalm-medium-webfont.eot');
+    src: url('../fonts/keepcalm-medium-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/keepcalm-medium-webfont.woff') format('woff'),
+         url('../fonts/keepcalm-medium-webfont.ttf') format('truetype'),
+         url('../fonts/keepcalm-medium-webfont.svg#keep_calmmedium') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 .hero-unit {
     margin: 40px auto 0 auto;
+    background: #5e7270; 
+}
+.hero-unit h1, .hero-unit h2, .hero-unit p {
+	color:white;
+	font-weight: normal;
+}
+.hero-unit h1 {
+	font-family: 'keep_calmmedium', "Gill Sans", Avenir, sans-serif;
+	letter-spacing: 1px;
+	text-transform: uppercase;
 }
