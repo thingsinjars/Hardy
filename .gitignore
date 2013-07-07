@@ -4,3 +4,5 @@ npm-debug.log
 chromedriver.log
 phantomjsdriver.log
 node_modules
+screenshots/*.png
+screenshots/tmp/*.png
