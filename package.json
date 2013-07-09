@@ -27,6 +27,7 @@
     },
     "dependencies": {
         "cucumber": "0.3.0",
-        "webdriverjs": "0.7.8"
+        "webdriverjs": "0.7.8",
+        "phantomjs": "1.9.1-0"
     }
 }
