@@ -3,5 +3,9 @@
 
     "host": "localhost",
 
-    "browser": "chrome"
+    "browser": "chrome",
+
+    "binaryPath": ".",
+
+    "testPath": "."
 }
