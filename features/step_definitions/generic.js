@@ -1,7 +1,7 @@
 module.exports = function () {
     process.setMaxListeners(0);
     console.log('Generic Steps Loaded');
-    this.World = require('../support/world.js');
+    // this.World = require('../support/world.js');
     var selectors = require('../selectors/selectors.js');
 
     /* "<Given> I visit <url>" */

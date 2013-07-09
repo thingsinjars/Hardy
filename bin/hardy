@@ -4,6 +4,8 @@
 //hardy --browser=chrome,phantomjs,ie features/
 
 var http = require("http"),
+    fs = require('fs'),
+    path = require('path'),
     spawn = require('child_process').spawn,
     VERSION = require('../package.json').version,
     PROPERTIES = {
@@ -11,60 +13,166 @@ var http = require("http"),
     },
     browsersToTest,
     testFolder,
-    path, numberOfRuns, currentRun,
-    exitCode;
+    numberOfRuns, currentRun,
+    exitCode,
+    seleniumLocked, seleniumPID,
+    hardyPath = path.resolve(require.main.filename, '../..') + '/',
+    testPath,
+    lockFile = hardyPath + '.seleniumlock';
 
 console.log('Hardy v' + VERSION);
 
-http.get("http://127.0.0.1:4444/wd/hub", function(res) {
-    console.log("Selenium is running: " + res.statusCode);
-}).on('error', function(e) {
-  console.log("Selenium not running: " + e.message);
-});
-
-
-if (process.argv.length >= 3) {
-
-    process.argv.forEach(function(arg) {
-        arg = arg.match(/^--([A-Za-z]+)=(.*)/);
-
-        // Only look for --[PROPERTY] style args, everything else can be forgotten
-        if (arg === null || !arg[1]) return;
-
-
-        // If the JSON file has the argument to override, then override it.
-        if (PROPERTIES.hasOwnProperty(arg[1])) {
-            PROPERTIES[arg[1]] = arg[2];
-
-            // Otherwise proclaim that it is an unrecognised argument
-        } else {
-            console.log('Unrecognised argument ' + arg[1]);
-        }
-
-    });
-
-    testFolder = process.argv[process.argv.length - 1];
-    browsersToTest = PROPERTIES.browser.split(',');
-    path = require('path').dirname(require.main.filename) + '/../';
-    numberOfRuns = browsersToTest.length;
-    currentRun = 0;
-    exitCode = 0;
-
-    browsersToTest.forEach(function(browser) {
-        console.log(path + 'node_modules/.bin/cucumber.js', ["-f=progress", "-r=" + path + 'features/', "--browser=" + browser, process.cwd() + '/' + testFolder]);
-        var testRun = spawn(path + 'node_modules/.bin/cucumber.js', ["-f=progress", "-r=" + path + 'features/', "--browser=" + browser, process.cwd() + '/' + testFolder]);
-        testRun.on('data', function (data) {
-          console.log('stdout: ' + data);
-        });
-        testRun.on('exit', makeNext(browser));
-    });
-} else {
+if (process.argv.length < 3) {
     usage();
+} else {
+
+    if (process.argv[2] === 'init') {
+        if(fs.existsSync('selectors/') || fs.existsSync('screenshots/')) {
+            console.log('Cannot init a non-empty directory');
+            process.exit(1);
+        } else {
+            fs.mkdirSync('selectors');
+            fs.mkdirSync('screenshots');
+            fs.writeFile('selectors/selectors.js', "module.exports = {};", function(err) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log("Test folder created");
+                    process.exit(0);
+                }
+            });
+        }
+    } else {
+        //First check if Selenium is running
+        http.get("http://127.0.0.1:4444/wd/hub", function(res) {
+            // console.log("Selenium is running: " + res.statusCode);
+
+            // is this our Selenium?
+            seleniumLocked = fs.existsSync(lockFile);
+            if (seleniumLocked) {
+                seleniumPID = fs.readFileSync(lockFile);
+            } else {
+                console.log('Using external selenium.');
+            }
+
+            // Selenium is running, is this a call to stop it?
+            if (process.argv[2] === 'selenium') {
+                if (process.argv[3] === 'stop') {
+                    if (seleniumLocked) {
+                        fs.unlinkSync(lockFile);
+                        process.kill(seleniumPID, 'SIGHUP');
+                        console.log('Selenium stopped');
+                    } else {
+                        console.log('Cannot control external Selenium');
+                    }
+                } else if (process.argv[3] === 'start') {
+                    console.log('Selenium already running [' + seleniumPID + ']');
+                } else {
+                    usage();
+                }
+
+            } else {
+                process.argv.forEach(function(arg) {
+                    arg = arg.match(/^--([A-Za-z]+)=(.*)/);
+
+                    // Only look for --[PROPERTY] style args, everything else can be forgotten
+                    if (arg === null || !arg[1]) return;
+
+
+                    // If the JSON file has the argument to override, then override it.
+                    if (PROPERTIES.hasOwnProperty(arg[1])) {
+                        PROPERTIES[arg[1]] = arg[2];
+
+                        // Otherwise proclaim that it is an unrecognised argument
+                    } else {
+                        console.log('Unrecognised argument ' + arg[1]);
+                    }
+
+                });
+
+                testFolder = process.argv[process.argv.length - 1];
+                testPath = path.resolve(testFolder);
+                browsersToTest = PROPERTIES.browser.split(',');
+                numberOfRuns = browsersToTest.length;
+                currentRun = 0;
+                exitCode = 0;
+
+                browsersToTest.forEach(function(browser) {
+                    var optionsArray = [];
+                    optionsArray.push("-f=progress");
+                    optionsArray.push("-r=" + hardyPath + 'features/');
+
+                    if (fs.existsSync(testPath + "/step_definitions/")) {
+                        optionsArray.push("-r=" + testPath + "/step_definitions/");
+                    }
+
+                    if (fs.existsSync(testPath + "/selectors/")) {
+                        optionsArray.push("-r=" + testPath + "/selectors/");
+                    }
+
+                    if (PROPERTIES.logLevel && PROPERTIES.logLevel !== 'silent') {
+                        optionsArray.push("--logLevel=" + PROPERTIES.logLevel);
+                    }
+
+                    optionsArray.push("--browser=" + browser);
+                    optionsArray.push("--binaryPath=" + hardyPath);
+                    optionsArray.push("--testPath=" + testPath);
+                    optionsArray.push(testPath);
+
+                    console.log(hardyPath + 'node_modules/.bin/cucumber.js', optionsArray, {
+                        cwd: testPath,
+                        stdio: 'inherit'
+                    });
+
+                    // process.exit(1);
+
+                    var testRun = spawn(hardyPath + 'node_modules/.bin/cucumber.js', optionsArray, {
+                        cwd: testPath,
+                        stdio: 'inherit'
+                    });
+                    testRun.on('exit', makeNext(browser));
+                });
+            }
+        }).on('error', function(e) {
+            // Selenium is not running, is this a call to start it?
+            if (process.argv[2] === 'selenium') {
+
+                // If it isn't running, get rid of any incorrect lockfiles
+                seleniumLocked = fs.existsSync(lockFile);
+                if (seleniumLocked) {
+                    fs.unlinkSync(lockFile);
+                }
+
+                if (process.argv[3] === 'start') {
+                    var selenium = spawn('java', ['-jar', path + 'bin/selenium-server-standalone-2.32.0.jar']);
+                    fs.writeFile(lockFile, selenium.pid, function(err) {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            console.log("Selenium started: [" + selenium.pid + "]");
+                            process.exit(1);
+                        }
+                    });
+                } else if (process.argv[3] === 'stop') {
+                    console.log('Selenium stopped');
+                } else {
+                    usage();
+                }
+
+            } else {
+                console.log("Selenium not running: " + e.message);
+                process.exit(0);
+            }
+        });
+
+    }
+
 }
 
 function usage() {
     console.log('Usage:');
     console.log('hardy --browser=chrome,phantomjs,ie features/');
+    process.exit(1);
 }
 
 function makeNext(browser) {

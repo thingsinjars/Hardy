@@ -5,6 +5,7 @@ module.exports = function(callback) {
         // Get our test properties
         var PROPERTIES = require('./testproperties.json');
 
+
         // Override any testproperty from command line with --[PROPERTY]=[VALUE]
         process.argv.forEach(function(arg) {
             arg = arg.match(/^--([A-Za-z]+)=(.*)/);
@@ -23,6 +24,9 @@ module.exports = function(callback) {
             }
 
         });
+
+        process.env['BINARYPATH'] = PROPERTIES.binaryPath;
+        process.env['TESTPATH'] = PROPERTIES.testPath;
 
         console.log('Loading browser ' + PROPERTIES.browser);
         var browser = require("webdriverjs").remote({

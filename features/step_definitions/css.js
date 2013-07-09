@@ -97,7 +97,8 @@ module.exports = function() {
         var elementSelector = selectors[elementName] || elementName;
 
         imageTest.init({
-            screenshotRoot: process.cwd() + '/screenshots',
+            screenshotRoot: process.env['TESTPATH'] + '/screenshots',
+            processRoot: process.env['BINARYPATH'],
             webdriver: this
         });
 
