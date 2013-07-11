@@ -62,9 +62,8 @@ function hardyCLI() {
             if (err) {
                 printMessageAndExit(err, 1);
             } else {
-                fs.mkdirSync('selectors');
                 fs.mkdirSync('screenshots');
-                fs.writeFile('selectors/selectors.js', "module.exports = {};", function(err) {
+                fs.writeFile('selectors.js', "module.exports = {};", function(err) {
                     if (err) {
                         printMessageAndExit(err, 1);
                     } else {
