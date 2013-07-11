@@ -1,8 +1,7 @@
 module.exports = function () {
     process.setMaxListeners(0);
     console.log('Generic Steps Loaded');
-    // this.World = require('../support/world.js');
-    var selectors = require('../selectors/selectors.js');
+    var selectors = require('../support/selectors.js');
 
     /* "<Given> I visit <url>" */
     this.Given(/^I visit "(https?:\/\/.*\..*)"$/, function (url, callback) {
@@ -11,7 +10,7 @@ module.exports = function () {
 
     /* "<When> I enter <text> into <selector>" */
     this.When(/^I enter '(.*)' into '(.*)'$/, function (text, selector, callback) {
-        selector = selectors[selector] || selector;
+        selector = selectors(selector);
         this.waitFor(selector, 1000, function (err, result) {
             if(err) {
                 return callback.fail(err);
@@ -22,13 +21,13 @@ module.exports = function () {
 
     /* "<When> I submit the form <selector>" */
     this.When(/^I submit the form '(.*)'$/, function (selector, callback) {
-        selector = selectors[selector] || selector;
+        selector = selectors(selector);
         this.submitForm(selector, callback);
     });
 
     /* "<Then> I should see <text> in the element <selector>" */
     this.Then(/^I should see '(.*)' in the element '(.*)'$/, function (text, selector, callback) {
-        selector = selectors[selector] || selector;
+        selector = selectors(selector);
 
         this.waitFor(selector, 1000, function (result) {
             // if (result.status !== 0) return callback.fail(new Error('Element ' + inputId + ' was not found after 2s'));
