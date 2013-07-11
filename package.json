@@ -29,5 +29,8 @@
         "cucumber": "0.3.0",
         "webdriverjs": "0.7.8",
         "phantomjs": "1.9.1-0"
+    },
+    "devDependencies": {
+        "jasmine-node": "1.10.2"
     }
 }
