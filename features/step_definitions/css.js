@@ -4,13 +4,14 @@ module.exports = function() {
     var imageTest = require('../support/imagetest');
     var utils = require('../support/css-utils');
     var assert = require('assert');
-    var selectors = require('../selectors/selectors.js');
+    var selectors = require('../support/selectors.js');
 
     /* "<Then> the <element> should have <property> of <value>" */
     // Map the given name to the selector then find that element in the page
     // The measured value of the property should be the one we expect
     this.Then(/^"([^"]*)" should have "([^"]*)" of "([^"]*)"$/, function(elementName, property, value, callback) {
-        var elementSelector = selectors[elementName] || elementName;
+
+        var elementSelector = selectors(elementName);
 
         var message = elementName + ' should have ' + property + ' of ' + value;
 
@@ -43,7 +44,8 @@ module.exports = function() {
     // Map the given name to the selector then find that element in the page
     // The measured value of the property should be more than or less than the one provided
     this.Then(/^"([^"]*)" should have "([^"]*)" of ([^"]*) than "([^"]*)"$/, function(elementName, property, comparator, value, callback) {
-        var elementSelector = selectors[elementName] || elementName;
+        var elementSelector = selectors(elementName);
+
 
         var message = elementName + ' should have ' + property + ' of ' + comparator + ' than ' + value;
 
@@ -94,7 +96,7 @@ module.exports = function() {
 
     /* Image Diff test */
     this.Then(/^the "([^"]*)" should look the same as before$/, function(elementName, callback) {
-        var elementSelector = selectors[elementName] || elementName;
+        var elementSelector = selectors(elementName);
 
         imageTest.init({
             screenshotRoot: process.env['TESTPATH'] + '/screenshots',
