@@ -20,11 +20,10 @@ function hardyCLI() {
         lockFile = hardyPath + '.seleniumlock';
 
 
-    function init() {
+    function init(properties) {
         console.log('Hardy v' + VERSION);
 
-        PROPERTIES = argParser(process.argv);
-
+        PROPERTIES = properties || argParser(process.argv);
 
         // If we've failed for some reason
         if (PROPERTIES.fail) {
@@ -230,7 +229,6 @@ function hardyCLI() {
         }
     }
 
-
     function printMessageAndExit(optionalMessage, exitCode, usage) {
         if (optionalMessage) {
             console.log(optionalMessage);
@@ -268,12 +266,10 @@ function hardyCLI() {
     }
 
     return {
-        init: init
+        PROPERTIES: PROPERTIES,
+        init: init,
+        printMessageAndExit: printMessageAndExit
     };
 }
 
-var CLI = hardyCLI();
-
-module.exports = {
-    init: CLI.init
-};
+module.exports = hardyCLI();

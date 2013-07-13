@@ -31,6 +31,7 @@
         "phantomjs": "1.9.1-0"
     },
     "devDependencies": {
-        "jasmine-node": "1.10.2"
+        "jasmine-node": "1.10.2",
+        "mockery": "latest"
     }
 }
