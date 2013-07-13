@@ -1,37 +1,45 @@
 {
-
-    "name": "hardy",
-    "version": "0.0.3",
-    "description": "A collection of steps to run CSS tests using Cucumber and Selenium",
-    "homepage": "http://hardy.io/",
-    "bugs": {
-        "url": "https://github.com/thingsinjars/GhostStory/issues"
-    },
-    "keywords": ["cucumber", "selenium", "automated", "css", "test"],
-    "author": {
-        "name": "Simon Madine",
-        "email": "simon@thingsinjars.com",
-        "web": "http://thingsinjars.com"
-    },
-    "bin": {
-        "hardy": "./bin/hardy"
-    },
-    "licenses": [{
-            "type": "MIT",
-            "url": "http://thingsinjars.mit-license.org/"
-        }
-    ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/thingsinjars/GhostStory.git"
-    },
-    "dependencies": {
-        "cucumber": "0.3.0",
-        "webdriverjs": "0.7.8",
-        "phantomjs": "1.9.1-0"
-    },
-    "devDependencies": {
-        "jasmine-node": "1.10.2",
-        "mockery": "latest"
+  "name": "hardy",
+  "version": "0.0.3",
+  "description": "A collection of steps to run CSS tests using Cucumber and Selenium",
+  "homepage": "http://hardy.io/",
+  "bugs": {
+    "url": "https://github.com/thingsinjars/GhostStory/issues"
+  },
+  "keywords": [
+    "cucumber",
+    "selenium",
+    "automated",
+    "css",
+    "test"
+  ],
+  "author": {
+    "name": "Simon Madine",
+    "email": "simon@thingsinjars.com",
+    "web": "http://thingsinjars.com"
+  },
+  "bin": {
+    "hardy": "./bin/hardy"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://thingsinjars.mit-license.org/"
     }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thingsinjars/GhostStory.git"
+  },
+  "dependencies": {
+    "cucumber": "0.3.0",
+    "webdriverjs": "0.7.8",
+    "phantomjs": "1.9.1-0"
+  },
+  "devDependencies": {
+    "jasmine-node": "1.10.2",
+    "mockery": "latest",
+    "grunt": "~0.4.1",
+    "grunt-jasmine-node": "~0.1.0"
+  }
 }
