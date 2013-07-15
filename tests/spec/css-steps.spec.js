@@ -3,7 +3,7 @@
 
 var CSSSteps, basedir;
 
-basedir = '../';
+basedir = '../../';
 
 var mockery = require('mockery');
 

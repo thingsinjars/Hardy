@@ -3,7 +3,7 @@
 
 var HardyCLI, basedir;
 
-basedir = '../';
+basedir = '../../';
 
 var mockery = require('mockery');
 
@@ -72,14 +72,6 @@ describe('HardyCLI: ', function() {
 			var HardyCLI;
 
 			fsMock.existsSync = jasmine.createSpy('fs.exists').andReturn(false);
-
-			// var fsMock = {
-			// 	existsSync: jasmine.createSpy('fs.exists').andReturn(false),
-			// 	writeFile: jasmine.createSpy('fs.creating file').andCallFake(function(filename, content, callback) {
-			// 		callback();
-			// 	}),
-			// 	mkdirSync: jasmine.createSpy('fs.creating directory')
-			// };
 
 			mockery.registerMock('fs', fsMock);
 			mockery.enable({useCleanCache: true });
