@@ -95,7 +95,7 @@ module.exports = function() {
     });
 
     /* Image Diff test */
-    this.Then(/^the "([^"]*)" should look the same as before$/, function(elementName, callback) {
+    this.Then(/^"([^"]*)" should look the same as before$/, function(elementName, callback) {
         var elementSelector = selectors(elementName);
 
         imageTest.init({
