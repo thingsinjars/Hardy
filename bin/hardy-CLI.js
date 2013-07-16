@@ -199,7 +199,7 @@ function hardyCLI() {
 
 
         if(PROPERTIES.logLevel === 'debug') {
-            console.log(hardyPath + 'node_modules/.bin/cucumber.js', optionsArray, {
+            console.log(hardyPath + 'node_modules/cucumber/bin/cucumber.js', optionsArray, {
                 cwd: testPath,
                 stdio: 'inherit'
             });
@@ -207,7 +207,7 @@ function hardyCLI() {
 
         // Spawn all the different browsers into separate child processes
         // but pipe the stdio and stderr back to the parent.
-        var testRun = spawn(hardyPath + 'node_modules/.bin/cucumber.js', optionsArray, {
+        var testRun = spawn(hardyPath + 'node_modules/cucumber/bin/cucumber.js', optionsArray, {
             cwd: testPath,
             stdio: 'inherit'
         });
