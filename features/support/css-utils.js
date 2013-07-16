@@ -134,7 +134,7 @@ module.exports = (function() {
     }
 
     function isHex(color) {
-        return (/^#[0-9a-f]{3}([0-9a-f]{3})?$/).test(color);
+        return (/^#[0-9a-f]{3}([0-9a-f]{3})?$/i).test(color);
     }
 
     function isColor(color) {
@@ -143,24 +143,29 @@ module.exports = (function() {
 
     var toRgba = function(color) {
         if (isRgb(color)) {
-            return color.replace(")",", 1)").replace('rgb(', 'rgba(');
+            return color.replace(")",",1)").replace('rgb(', 'rgba(').replace(/\s/g,'');
         }
         if (isRgba(color)) {
-            return color;
+            return color.replace(/\s/g,'');
         }
         if (isHsla(color)) {
-            return hslaToRgba(color);
+            return hslaToRgba(color).replace(/\s/g,'');
         }
         if (isHex(color)) {
-            return hexToRgba(color, 100);
+            return hexToRgba(color, 100).replace(/\s/g,'');
         }
 
+    };
+
+    var normalizeString = function(value) {
+        return value.replace(/\s/g,'');
     };
 
     return {
         camelize: camelize,
         isColor: isColor,
-        toRgba: toRgba
+        toRgba: toRgba,
+        normalizeString: normalizeString
     };
 
 }());
