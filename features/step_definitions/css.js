@@ -68,9 +68,9 @@ module.exports = function() {
                     }
                     message += ' (' + measuredValue[property] + ')';
                     if (comparator === 'less') {
-                        assert(measuredValue[property] < value, message);
+                        assert.ok(measuredValue[property] < value, message);
                     } else {
-                        assert(measuredValue[property] > value, message);
+                        assert.ok(measuredValue[property] > value, message);
                     }
                     callback();
                 });
@@ -81,10 +81,11 @@ module.exports = function() {
                     }
                     message += ' (' + measuredValue + ')';
                     if (comparator === 'less') {
-                        assert(measuredValue < value, message);
+                        assert.ok(measuredValue < value, message);
                     } else {
-                        assert(measuredValue > value, message);
+                        assert.ok(measuredValue > value, message);
                     }
+
                     callback();
                 });
             }
