@@ -18,8 +18,11 @@ module.exports = function() {
         }
         this.getCssProperty(elementSelector, property, function(err, measuredValue) {
             if (err) {
-                console.error("Hardy :: Failed to get CSS property, ", err);
-                console.error("Hardy :: Could not find element '%s'", elementSelector);
+                if (typeof err === "object") {
+                    err = err.type + ': ' + err.orgStatusMessage + ': "' + elementSelector + '"';
+                }
+                // console.error("Hardy :: Failed to get CSS property, ", err);
+                // console.error("Hardy :: Could not find element '%s'", elementSelector);
                 return callback.fail(err);
             }
 
@@ -35,7 +38,7 @@ module.exports = function() {
 
             callback();
         });
-    }
+    };
     this.Then(/^"([^"]*)" should have "([^"]*)" of "([^"]*)"$/, shouldHavePropertyOfValue);
 
     // "<Given> the window size is <width> by <height>"
@@ -44,7 +47,7 @@ module.exports = function() {
         width = parseInt(width, 10);
         height = parseInt(height, 10);
         this.setWindowSize(width, height, callback);
-    }
+    };
     this.Given(/^the window size is "([^"]*)" by "([^"]*)"$/, windowSizeIs);
 
     //    "<Then> the <element> should have <property> of <comparator> than <value>"
@@ -60,40 +63,55 @@ module.exports = function() {
 
         // Special case for width and height which, if unset, default to auto
         // A few other things do as well but these are the most common.
-        try {
-            if (property === 'width' || property === 'height') {
-                this.getSize(elementSelector, function(err, measuredValue) {
-                    if (err) {
-                        callback.fail(err);
-                    }
-                    message += ' (' + measuredValue[property] + ')';
-                    if (comparator === 'less') {
-                        assert.ok(measuredValue[property] < value, message);
-                    } else {
-                        assert.ok(measuredValue[property] > value, message);
-                    }
-                    callback();
-                });
-            } else {
-                this.getCssProperty(elementSelector, property, function(err, measuredValue) {
-                    if (err) {
-                        callback.fail(err);
-                    }
-                    message += ' (' + measuredValue + ')';
-                    if (comparator === 'less') {
+        if (property === 'width' || property === 'height') {
+            this.getSize(elementSelector, function(err, measuredValue) {
+                if (err) {
+                    callback.fail(err);
+                }
+                measuredValue = measuredValue[property];
+                // compare(value, measuredValue, message, callback);
+                measuredValue = parseInt(measuredValue, 10);
+                message += ' (' + measuredValue + ')';
+                if (comparator === 'less') {
+                    try {
                         assert.ok(measuredValue < value, message);
-                    } else {
-                        assert.ok(measuredValue > value, message);
+                    } catch (e) {
+                        return callback.fail(e.message);
                     }
+                } else {
+                    try {
+                        assert.ok(measuredValue > value, message);
+                    } catch (e) {
+                        return callback.fail(e.message);
+                    }
+                }
+                callback();
+            });
+        } else {
+            this.getCssProperty(elementSelector, property, function(err, measuredValue) {
+                if (err) {
+                    callback.fail(err);
+                }
+                measuredValue = parseInt(measuredValue, 10);
+                message += ' (' + measuredValue + ')';
+                if (comparator === 'less') {
+                    try {
+                        assert.ok(measuredValue < value, message);
+                    } catch (e) {
+                        return callback.fail(e.message);
+                    }
+                } else {
+                    try {
+                        assert.ok(measuredValue > value, message);
+                    } catch (e) {
+                        return callback.fail(e.message);
+                    }
+                }
 
-                    callback();
-                });
-            }
-        } catch (e) {
-            return callback.fail(e.message);
+                callback();
+            });
         }
-
-    }
+    };
     this.Then(/^"([^"]*)" should have "([^"]*)" of ([^"]*) than "([^"]*)"$/, shouldHavePropertyOfComparatorThanValue);
 
     /* Image Diff test */
