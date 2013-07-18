@@ -5,7 +5,11 @@ module.exports = function () {
 
     /* "<Given> I visit <url>" */
     this.Given(/^I visit "(https?:\/\/.*\..*)"$/, function (url, callback) {
-        this.init().url(url, callback);
+        try {
+            this.init().url(url, callback);
+        } catch(o_O) {
+            callback.fail(o_O);
+        }
     });
 
     /* "<When> I enter <text> into <selector>" */
