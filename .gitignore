@@ -6,3 +6,5 @@ phantomjsdriver.log
 node_modules
 screenshots/*.png
 screenshots/tmp/*.png
+.seleniumlock
+libpeerconnection.log
