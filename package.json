@@ -40,6 +40,7 @@
     "jasmine-node": "1.10.2",
     "mockery": "latest",
     "grunt": "~0.4.1",
-    "grunt-jasmine-node": "~0.1.0"
+    "grunt-jasmine-node": "~0.1.0",
+    "grunt-shell": "~0.3.1"
   }
 }
