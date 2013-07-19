@@ -22,7 +22,7 @@
     "hardy": "./bin/hardy"
   },
   "scripts": {
-    "test": "grunt unit"
+    "test": "grunt remotetest"
   },
   "licenses": [
     {
