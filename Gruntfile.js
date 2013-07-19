@@ -14,8 +14,17 @@ module.exports = function(grunt) {
       }
     },
     shell: {
-        acceptanceTests: {
+        full: {
             command: './test.sh',
+            options: {
+                stdout: true,
+                execOptions: {
+                    cwd: './tests/acceptance'
+                }
+            }
+        },
+        phantom: {
+            command: './phantom.sh',
             options: {
                 stdout: true,
                 execOptions: {
@@ -31,7 +40,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-shell');
 
   grunt.registerTask('unit', 'jasmine_node');
-  grunt.registerTask('acceptance', 'shell');
+  grunt.registerTask('acceptance', 'shell:full');
+  grunt.registerTask('phantom', 'shell:phantom');
   grunt.registerTask('test', ['jasmine_node', 'shell']);
+  grunt.registerTask('remotetest', ['jasmine_node', 'shell:phantom']);
 
 };
