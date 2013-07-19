@@ -78,9 +78,9 @@ function captureSelector(filename, selector, callback) {
                     }
 
                     // Spawn a separate process to crop the image to the size and position of the element
-                    // console.log(_processRoot + '/bin/GhostKnife/ghostknife', [tempFile, where.x, where.y, size.width, size.height, 3000, 10000, filename]);
+                    // console.log(_processRoot + '/lib/GhostKnife/ghostknife', [tempFile, where.x, where.y, size.width, size.height, 3000, 10000, filename]);
                     var spawn = require('child_process').spawn,
-                    imgcrp = spawn(_processRoot + '/bin/GhostKnife/ghostknife', [tempFile, where.x, where.y, size.width, size.height, 3000, 10000, filename]);
+                    imgcrp = spawn(_processRoot + '/lib/GhostKnife/ghostknife', [tempFile, where.x, where.y, size.width, size.height, 3000, 10000, filename]);
                     imgcrp.on('exit', function(code) {
                         if (code === 0) {
                             callback(null, {status: /\.diff\./.test(filename)?'success':'firstrun', value: filename});
@@ -105,7 +105,7 @@ function compare(filename, callback) {
     } else {
         // But instead, we have to spawn the global imagediff because the node one is acting weird
         var spawn = require('child_process').spawn,
-            imgdf = spawn(_processRoot + '/bin/GhostDiff/ghostdiff', [filename, baseFile]);
+            imgdf = spawn(_processRoot + '/lib/GhostDiff/ghostdiff', [filename, baseFile]);
         imgdf.on('exit', function(code) {
             if (code === 0) {
                 callback();

@@ -1,11 +1,11 @@
-[submodule "bin/GhostDiff"]
-	path = bin/GhostDiff
+[submodule "lib/GhostDiff"]
+	path = lib/GhostDiff
 	url = https://github.com/thingsinjars/GhostDiff.git
 
-[submodule "bin/GhostKnife"]
-	path = bin/GhostKnife
+[submodule "lib/GhostKnife"]
+	path = lib/GhostKnife
 	url = https://github.com/thingsinjars/GhostKnife.git
 
-[submodule "bin/HardyChrome"]
-	path = bin/HardyChrome
+[submodule "lib/HardyChrome"]
+	path = lib/HardyChrome
 	url = https://github.com/thingsinjars/HardyChrome.git
