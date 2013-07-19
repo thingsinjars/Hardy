@@ -21,6 +21,9 @@
   "bin": {
     "hardy": "./bin/hardy"
   },
+  "scripts": {
+    "test": "grunt unit"
+  },
   "licenses": [
     {
       "type": "MIT",
