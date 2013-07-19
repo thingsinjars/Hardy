@@ -12,10 +12,26 @@ module.exports = function(grunt) {
         useDotNotation: true,
         consolidate: true
       }
+    },
+    shell: {
+        acceptanceTests: {
+            command: './test.sh',
+            options: {
+                stdout: true,
+                execOptions: {
+                    cwd: './tests/acceptance'
+                }
+            }
+        }
     }
   });
 
   grunt.loadNpmTasks('grunt-jasmine-node');
 
-  grunt.registerTask('test', 'jasmine_node');
+  grunt.loadNpmTasks('grunt-shell');
+
+  grunt.registerTask('unit', 'jasmine_node');
+  grunt.registerTask('acceptance', 'shell');
+  grunt.registerTask('test', ['jasmine_node', 'shell']);
+
 };

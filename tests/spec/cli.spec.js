@@ -35,7 +35,7 @@ describe('HardyCLI: ', function() {
 		};
 
 		child_processMock = {
-			spawn: jasmine.createSpy('child_process.spawn').andReturn({pid: '999'})
+			spawn: jasmine.createSpy('child_process.spawn').andReturn({pid: '999', on: jasmine.createSpy('registering on process exit')})
 		};
 
 	});
@@ -115,6 +115,7 @@ describe('HardyCLI: ', function() {
 			fsMock.readFileSync =  jasmine.createSpy('fs.readFileSync').andReturn('1234');
 
 			mockery.registerMock('fs', fsMock);
+			mockery.registerMock('child_process', child_processMock);
 
 			mockery.enable({useCleanCache: true});
 			HardyCLI = require(basedir + 'bin/hardy-CLI');
