@@ -1,92 +1,57 @@
 Hardy
 ===
 
-(a.k.a. GhostStory 2: The Ghostening)
-
 Hardy is a collection of CSS testing steps and a boilerplate testing setup to get you up-and-running with automated CSS testing as quickly as possible. Tests are written in Cucumber and use Selenium. Hardy runs on Node.js and therefore all the example CSS test helpers are written in JS. The functionality behind them can easily be reused in any test setup, whether your tests are written in Java, Ruby or anything else.
 
 This is a refactor of the original GhostStory project to run against Selenium using WebDriverJS. The original collection of CSS testing steps were written specifically for CasperJS and PhantomJS but now that PhantomJS supports the WebDriver protocol, we're now going via Selenium so that tests can be run against any browser.
 
-The structure of this project and the webdriverjs bindings are from [WebDriverJS](https://github.com/camme/webdriverjs).
+The structure of this project and the WebDriverJS bindings are from [WebDriverJS](https://github.com/camme/webdriverjs).
 
 ![image](https://raw.github.com/thingsinjars/hardy.io/master/assets/small-logo.png)
 
-Dependencies
+Installation
 ---
 
-### Selenium
+The recommended way to install Hardy is via [npm](https://npmjs.org/):
 
-Makes the whole thing go.
+    npm install -g hardy
 
-### PhantomJS
+This will place a global command `hardy` in your path and allow you to run it against any test folders on your machine. Hardy includes [Selenium Standalone Server v2.32.0](http://docs.seleniumhq.org/) and [PhantomJS v1.9.0](http://phantomjs.org/) but doesn't expose them globally.
 
-Aside from being extremely handy as a potential test browser, GhostStory relies on PhantomJS for its image processing. If you aren't planning on doing any image diff tests, you can skip it.
+For best results, you'll also need a Selenium–capable browser. Firefox supports the WebDriver protocol by default so without specifying otherwise, tests will be run against Firefox. [PhantomJS](http://phantomjs.org/) also supports WebDriver.
 
+To run tests against Chrome, you will need to install [ChromeDriver](https://code.google.com/p/selenium/wiki/ChromeDriver).
+
+To run tests against Internet Explorer, you will need [InternetExplorerDriver](https://code.google.com/p/selenium/wiki/InternetExplorerDriver).
+
+Getting started
 ---
 
-## CSS test steps available:
+For full details on how to get started with Hardy, check out the documentation at [hardy.io](http://hardy.io/)
 
-### `Then "element" should have "CSS property" of "value"`
+Commands / usage
+---
 
-Measures the current value of the property and asserts against the expected value
+    hardy init
+      initialises an empty test directory
+    hardy selenium start
+      starts up the local selenium server
+    hardy selenium stop
+      stops the local selenium server
+    hardy .
+      run all the tests in the current folder against the default browser (Firefox)
+    hardy --browser=phantomjs .
+      specify the browser to test against
+    hardy --browser=phantomjs,chrome .
+      specify multiple browsers to test against
 
-### `Then "element" should have "CSS property" of [more|greater|less] than "value"`
+Tests
+---
 
-Measures the current value of the property and compares against the expected value
+To verify Hardy is working as it should, unit and acceptance tests are available. They can be run via [Grunt](http://gruntjs.com/) from the project root:
 
-### `Then "element" should look the same as before`
+    grunt unit
+    grunt acceptance
 
-Renders an image of the element for image diff testing. The first time this step is used, it will fail and generate a base reference image.
-
-## CSS test steps to be made:
-
-### `Then "element" should have "CSS property" of "value" or "value" [or "value"]*`
-
-## General steps available:
-
-### `Given the window size is "width" by "height"`
-
-### `Given I visit "(https?:\/\/.*\..*)"`
-
-### `When I enter "text" into "selector"`
-
-### `When I submit the form "selector"`
-
-### `Then I should see "text" in the element "selector"`
-
-There are obviously many more generic steps missed but they should be straightforward to add.
-
-## Custom Steps
-
-Add these in a module in the `features/step_definitions` folder.
-
-
-Using
-===
-
-Start selenium
-
-    java -jar bin/selenium-server-standalone-2.32.0.jar
-
-This should work with any recent version of Selenium. I've only tested with 2.32 so far.
-
-Specify test properties in the file `features/support/testproperties.js` or explicitly on the command-line.
-
-    ./node_modules/cucumber/bin/cucumber.js --browser=phantomjs
-    ./node_modules/cucumber/bin/cucumber.js --browser=chrome
-    ./node_modules/cucumber/bin/cucumber.js --browser='internet explorer'
-
-Note: If you want to test in chrome, you'll also need the ChromeDriver package. Consult the Selenium wiki for more.
-
-Uses the selectors/selectors.js files to map human descriptions of elements to CSS selectors
-
-## File structure
-
-
-
-  * features/*.feature - the story files you want to run.
-  * support/teardown.js - closes the browser after each scenario
-  * support/testproperties.json - Configuration stuffs
-  * support/world.js - This is the bootstrapper for WebDriverJS, be careful!
-  * step_definitions/generic.js - Good place to keep testwide step definitions, such as "I click <id>"
-  * step_definitions/*.js - Other step definitions, ideally you should have a 1-1 relationship between feature file and specific definitions as the complimentary .js file
+    # Or, to run both:
+    grunt test
