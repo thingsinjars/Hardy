@@ -16,7 +16,7 @@ The recommended way to install Hardy is via [npm](https://npmjs.org/):
 
     npm install -g hardy
 
-This will place a global command `hardy` in your path and allow you to run it against any test folders on your machine. Hardy includes [Selenium Standalone Server v2.32.0](http://docs.seleniumhq.org/) and [PhantomJS v1.9.0](http://phantomjs.org/) but doesn't expose them globally.
+This will install Hardy as a global node module and put an executable `hardy` in your path. It will also include a local version of [Selenium v2.32.0]((http://docs.seleniumhq.org/) in case you don't have that already and a local copy of [PhantomJS v1.9.0]((http://phantomjs.org/)) for image diff test processing.
 
 For best results, you'll also need a Selenium–capable browser. Firefox supports the WebDriver protocol by default so without specifying otherwise, tests will be run against Firefox. [PhantomJS](http://phantomjs.org/) also supports WebDriver.
 
@@ -34,16 +34,21 @@ Commands / usage
 
     hardy init
       initialises an empty test directory
+
     hardy selenium start
-      starts up the local selenium server
+      starts the local selenium server (essential before tests)
+
     hardy selenium stop
       stops the local selenium server
+
     hardy .
-      run all the tests in the current folder against the default browser (Firefox)
+      run all the tests in the current folder with the default browser (Firefox)
+
     hardy --browser=phantomjs .
-      specify the browser to test against
+      specify the browser to test with
+
     hardy --browser=phantomjs,chrome .
-      specify multiple browsers to test against
+      specify multiple browsers to test with
 
 Tests
 ---
