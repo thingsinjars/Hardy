@@ -3,12 +3,18 @@ node_js:
   - "0.11"
   - "0.10"
   - "0.8"
-before_install:
-  - git submodule update --init --recursive
+# before_install:
+#   - git submodule update --init --recursive
+before_script:
+- "export DISPLAY=:99.0"
+- "sh -e /etc/init.d/xvfb start"
+- "firefox --version"
+- "phantomjs --version"
 branches:
   only:
     - webdriver
 before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
+  - "firefox --version"
   - "phantomjs --version"

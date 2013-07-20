@@ -1,8 +1,8 @@
 #!/bin/bash
 EXIT_STATUS=0;
 
-# Run the tests in PhantomJS
-command -v phantomjs
+# Run the tests in our PhantomJS
+command -v phantomjs >/dev/null 2>&1 || { echo >&2 "PhantomJS not installed. Skipping PhantomJS tests."; exit 1; }
 echo -n "Running tests in PhantomJS..."
 pout="`../../bin/hardy --browser=phantomjs .`"
 
