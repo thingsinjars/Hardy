@@ -1,4 +1,5 @@
 language: node_js
+script: "grunt travis"
 node_js:
   - "0.11"
   - "0.10"

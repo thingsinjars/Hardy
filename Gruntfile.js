@@ -43,6 +43,6 @@ module.exports = function(grunt) {
   grunt.registerTask('acceptance', 'shell:full');
   grunt.registerTask('phantom', 'shell:phantom');
   grunt.registerTask('test', ['jasmine_node', 'shell']);
-  grunt.registerTask('remotetest', ['jasmine_node', 'shell:phantom']);
+  grunt.registerTask('travis', ['jasmine_node', 'shell:phantom']);
 
 };
