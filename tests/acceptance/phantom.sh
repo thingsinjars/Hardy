@@ -2,6 +2,7 @@
 EXIT_STATUS=0;
 
 # Run the tests in PhantomJS
+command -v phantomjs
 echo -n "Running tests in PhantomJS..."
 pout="`../../bin/hardy --browser=phantomjs .`"
 
