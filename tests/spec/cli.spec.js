@@ -163,7 +163,7 @@ describe('HardyCLI: ', function() {
 
 			HardyCLI.init(seleniumProperties);
 
-			expect(console.log).toHaveBeenCalledWith("Selenium running: [999]");
+			expect(console.log).toHaveBeenCalledWith("Selenium started: [999]");
 
 		});
 		it('stops selenium', function() {
