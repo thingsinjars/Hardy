@@ -26,6 +26,7 @@ if [ "$EXIT_STATUS" -eq 0 ]; then
 	echo "..passed"
 else
 	echo "..failed"
+	echo $ffout;
 fi
 
 # Run the tests in our PhantomJS
@@ -54,5 +55,6 @@ if [ "$EXIT_STATUS" -eq 0 ]; then
 	echo "passed"
 else
 	echo "failed"
+	echo $pout;
 fi
 exit $EXIT_STATUS
