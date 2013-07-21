@@ -76,12 +76,12 @@ function hardyCLI() {
 
     function controlNotRunningSelenium() {
         if (PROPERTIES.seleniumAction === 'start') {
-            var selenium = spawn('java', ['-jar', hardyPath + 'bin/selenium-server-standalone-2.32.0.jar']);
+            var selenium = spawn('java', ['-jar', hardyPath + 'lib/selenium-server-standalone-2.32.0.jar']);
             fs.writeFile(lockFile, selenium.pid, function(err) {
                 if (err) {
                     console.log(err);
                 } else {
-                    printMessageAndExit("Selenium running: [" + selenium.pid + "]");
+                    printMessageAndExit("Selenium started: [" + selenium.pid + "]");
                 }
             });
         } else if (PROPERTIES.seleniumAction === 'stop') {
