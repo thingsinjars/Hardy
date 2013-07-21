@@ -60,3 +60,7 @@ To verify Hardy is working as it should, unit and acceptance tests are available
 
     # Or, to run both:
     grunt test
+    
+The tests are automatically run on every commit to the main repo. Currently building on Travis CI:
+
+[![Build Status](https://travis-ci.org/thingsinjars/GhostStory.png)](https://travis-ci.org/thingsinjars/GhostStory)
