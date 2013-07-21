@@ -1,3 +1,5 @@
+_Note: Big improvements are underway in v2, now available for beta testing in the [WebDriver branch](https://github.com/thingsinjars/GhostStory/tree/webdriver)._
+
 GhostStory
 ===
 
