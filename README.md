@@ -1,6 +1,8 @@
 Hardy
 ===
 
+(pre-release)
+
 Hardy is a collection of CSS testing steps and a boilerplate testing setup to get you up-and-running with automated CSS testing as quickly as possible. Tests are written in Cucumber and use Selenium. Hardy runs on Node.js and therefore all the example CSS test helpers are written in JS. The functionality behind them can easily be reused in any test setup, whether your tests are written in Java, Ruby or anything else.
 
 This is a refactor of the original GhostStory project to run against Selenium using WebDriverJS. The original collection of CSS testing steps were written specifically for CasperJS and PhantomJS but now that PhantomJS supports the WebDriver protocol, we're now going via Selenium so that tests can be run against any browser.
