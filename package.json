@@ -22,7 +22,7 @@
     "hardy": "./bin/hardy"
   },
   "scripts": {
-    "test": "bin/hardy --browser=phantomjs tests/acceptance"
+    "test": "grunt test"
   },
   "licenses": [
     {
