@@ -1,7 +1,6 @@
 module.exports = function(grunt) {
   grunt.initConfig({
     jasmine_node: {
-      specFolders: ["./tests/spec"],
       specNameMatcher: "spec", // load only specs containing specNameMatcher
       projectRoot: ".",
       requirejs: false,
