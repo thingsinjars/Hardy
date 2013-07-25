@@ -5,7 +5,7 @@ module.exports = function() {
         utils = require('../support/css-utils'),
         assert = require('assert'),
         selectors = require('../support/selectors.js');
-    var shouldHavePropertyOfValue, windowSizeIs, shouldHavePropertyOfComparatorThanValue, shouldLookTheSameAsBefore;
+    var shouldHavePropertyOfValue, shouldHaveOffsetPropertyOfValue, shouldHavePropertyOfComparatorThanValue, shouldLookTheSameAsBefore;
 
     /* "<Then> the <element> should have <property> of <value>" */
     // Map the given name to the selector then find that element in the page
@@ -41,14 +41,35 @@ module.exports = function() {
     };
     this.Then(/^"([^"]*)" should have "([^"]*)" of "([^"]*)"$/, shouldHavePropertyOfValue);
 
-    // "<Given> the window size is <width> by <height>"
-    // Set the browser window size to the specified one
-    windowSizeIs = function(width, height, callback) {
-        width = parseInt(width, 10);
-        height = parseInt(height, 10);
-        this.setWindowSize(width, height, callback);
+    /* "<Then> <element> should have offset <top|left> of <value>" */
+    // Calculates the exact offset of the element regardless of the specified styles
+    shouldHaveOffsetPropertyOfValue = function(elementName, property, value, callback) {
+        var elementSelector = selectors(elementName),
+            message = '"' + elementName + '" should have offset ' + property + ' of ' + value,
+            index = property==='top'?'y':'x',
+            value = value.replace(/px/,'');
+
+        this.getLocation(elementSelector, function(err, measuredValue) {
+            if (err) {
+                if (typeof err === "object") {
+                    err = JSON.stringify(err);
+                }
+                console.error("Hardy :: Failed to execute script, ", err);
+                return callback.fail(err);
+            }
+
+            message += ", measured: " + measuredValue[index];
+
+            try {
+                assert.equal(measuredValue[index], value, message);
+            } catch (e) {
+                return callback.fail(e.message);
+            }
+
+            callback();
+        });
     };
-    this.Given(/^the window size is "([^"]*)" by "([^"]*)"$/, windowSizeIs);
+    this.Then(/^"([^"]*)" should have offset "([^"]*)" of "([^"]*)"$/, shouldHaveOffsetPropertyOfValue);
 
     //    "<Then> the <element> should have <property> of <comparator> than <value>"
     // Map the given name to the selector then find that element in the page
