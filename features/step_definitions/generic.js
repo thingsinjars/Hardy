@@ -2,6 +2,7 @@ module.exports = function () {
     process.setMaxListeners(0);
     console.log('Generic Steps Loaded');
     var selectors = require('../support/selectors.js');
+    var windowSizeIs;
 
     /* "<Given> I visit <url>" */
     this.Given(/^I visit "(https?:\/\/.*\..*)"$/, function (url, callback) {
@@ -11,6 +12,15 @@ module.exports = function () {
             callback.fail(o_O);
         }
     });
+
+    // "<Given> the window size is <width> by <height>"
+    // Set the browser window size to the specified one
+    windowSizeIs = function(width, height, callback) {
+        width = parseInt(width, 10);
+        height = parseInt(height, 10);
+        this.setWindowSize(width, height, callback);
+    };
+    this.Given(/^the window size is "([^"]*)" by "([^"]*)"$/, windowSizeIs);
 
     /* "<When> I enter <text> into <selector>" */
     this.When(/^I enter '(.*)' into '(.*)'$/, function (text, selector, callback) {
