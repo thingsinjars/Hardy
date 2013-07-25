@@ -40,6 +40,7 @@ function hardyCLI() {
                 } else {
                     // If the directory is empty, create the default empty files
                     createTestFolder();
+                    printMessageAndExit('Directory initialised');
                 }
 
             } else {
@@ -225,7 +226,7 @@ function hardyCLI() {
 
             controlNotRunningSelenium();
         } else {
-            printMessageAndExit("Selenium not running: " + e.message, 1);
+            printMessageAndExit("Selenium not running: " + e.message + "\nStart it using:\nhardy selenium start", 1);
         }
     }
 
