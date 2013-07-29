@@ -83,7 +83,7 @@ describe('HardyCLI: ', function() {
 			});
 
 			expect(fsMock.existsSync).toHaveBeenCalled();
-			expect(console.log).toHaveBeenCalledWith("Test folder created");
+			expect(console.log).toHaveBeenCalledWith("Directory initialised");
 			expect(process.exit).toHaveBeenCalledWith(0);
 
 		});

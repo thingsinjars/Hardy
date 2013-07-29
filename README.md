@@ -66,3 +66,26 @@ To verify Hardy is working as it should, unit and acceptance tests are available
 The tests are automatically run on every commit to the main repo. Currently building on Travis CI:
 
 [![Build Status](https://travis-ci.org/thingsinjars/GhostStory.png)](https://travis-ci.org/thingsinjars/GhostStory)
+
+Travis Integration
+---
+
+To include Hardy in a Travis CI pipeline, import it as a devDependency:
+
+    npm install --save-dev hardy
+
+Add the following to your .travis.yml:
+
+    before_script:
+      - export DISPLAY=:99.0
+      - sh -e /etc/init.d/xvfb start
+      - node_modules/hardy/bin/hardy selenium start
+      - sleep 10
+      - firefox --version
+      - phantomjs --version
+
+And finally, add this to your package.json `scripts` object:
+
+    "scripts": {
+      "test": "node_modules/hardy/bin/hardy --browser=firefox,phantom <PATH TO YOUR TEST FOLDER>"
+    },

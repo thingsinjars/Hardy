@@ -91,14 +91,14 @@ describe('CSS Steps: ', function() {
 	describe('cucumber test loading', function() {
 
 		it('should register all Given and Then matchers', function() {
-			expect(cucumberMock.Given).toHaveBeenCalledWith(/^the window size is "([^"]*)" by "([^"]*)"$/, jasmine.any(Function));
+			//expect(cucumberMock.Given).toHaveBeenCalledWith(/^the window size is "([^"]*)" by "([^"]*)"$/, jasmine.any(Function));
 			expect(cucumberMock.Then).toHaveBeenCalledWith(/^"([^"]*)" should have "([^"]*)" of "([^"]*)"$/, jasmine.any(Function));
 			expect(cucumberMock.Then).toHaveBeenCalledWith(/^"([^"]*)" should have "([^"]*)" of ([^"]*) than "([^"]*)"$/, jasmine.any(Function));
 			expect(cucumberMock.Then).toHaveBeenCalledWith(/^"([^"]*)" should look the same as before$/, jasmine.any(Function));
 		});
 	});
 	describe('Test step', function() {
-		it('"should set window size"', function() {
+		xit('"should set window size"', function() { // moved this step to generics. must create test file for them
 			cucumberGivens['/^the window size is "([^"]*)" by "([^"]*)"$/'].apply(cucumberMock);
 			expect(cucumberMock.setWindowSize).toHaveBeenCalled();
 		});

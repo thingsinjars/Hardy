@@ -58,21 +58,12 @@ function hardyCLI() {
     }
 
     function createTestFolder() {
-        fs.writeFile('test.feature', "", function(err) {
-            if (err) {
-                printMessageAndExit(err, 1);
-            } else {
-                fs.mkdirSync('screenshots');
-                fs.writeFile('selectors.js', "module.exports = {};", function(err) {
-                    if (err) {
-                        printMessageAndExit(err, 1);
-                    } else {
-                        printMessageAndExit("Test folder created");
-                    }
-                });
-                printMessageAndExit();
-            }
-        });
+        fs.writeFileSync('test.feature', "Feature:");
+        fs.mkdirSync('screenshots');
+        fs.mkdirSync('step_definitions');
+        fs.writeFileSync('step_definitions/custom.js', "");
+        fs.writeFileSync('selectors.js', "module.exports = {};");
+        // printMessageAndExit("Test folder created");
     }
 
     function controlNotRunningSelenium() {
@@ -199,7 +190,7 @@ function hardyCLI() {
         optionsArray.push(testPath);
 
 
-        if(PROPERTIES.logLevel === 'debug') {
+        if (PROPERTIES.logLevel === 'debug') {
             console.log(hardyPath + 'node_modules/cucumber/bin/cucumber.js', optionsArray, {
                 cwd: testPath,
                 stdio: 'inherit'
@@ -250,6 +241,7 @@ function hardyCLI() {
 
     // Helper to make the main thread wait for the children to finish before
     // deciding on its own error code.
+
     function makeNext(browser) {
         return function next(code) {
             exitCode += code;
