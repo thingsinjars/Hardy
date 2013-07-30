@@ -3,7 +3,7 @@
 
     "host": "localhost",
 
-    "browser": "chrome",
+    "browser": "firefox",
 
     "binaryPath": ".",
 
