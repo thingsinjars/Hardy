@@ -80,10 +80,11 @@ Add the following to your .travis.yml:
       - export DISPLAY=:99.0
       - sh -e /etc/init.d/xvfb start
       - node_modules/hardy/bin/hardy selenium start
-      - sleep 10
       - firefox --version
       - phantomjs --version
-
+      - grunt server:travis&
+      - sleep 15
+    
 And finally, add this to your package.json `scripts` object:
 
     "scripts": {
