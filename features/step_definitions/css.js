@@ -145,10 +145,10 @@ module.exports = function() {
         });
         imageTest.screenshot(elementSelector, function(err, result) {
             if (err) {
-                callback.fail(err);
+                return callback.fail(err);
             }
             if (result.status === 'firstrun') {
-                callback.fail(new Error("First time this test has been run. New test cases have been created."));
+                return callback.fail(new Error("First time this test has been run. New test cases have been created."));
             }
             imageTest.compare(result.value, callback);
         });
