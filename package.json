@@ -1,6 +1,6 @@
 {
   "name": "hardy",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "A collection of steps to run CSS tests using Cucumber and Selenium",
   "homepage": "http://hardy.io/",
   "bugs": {
@@ -37,7 +37,8 @@
   "dependencies": {
     "cucumber": "0.3.0",
     "webdriverjs": "0.7.8",
-    "phantomjs": "1.9.1-0"
+    "phantomjs": "1.9.1-0",
+    "win-spawn": "2.0.0"
   },
   "devDependencies": {
     "jasmine-node": "1.10.2",

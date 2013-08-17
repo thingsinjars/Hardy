@@ -8,7 +8,7 @@ function hardyCLI() {
     var http = require("http"),
         fs = require('fs'),
         path = require('path'),
-        spawn = require('child_process').spawn,
+        spawn = require('os').type() === 'Windows_NT' ? require('win-spawn') : require('child_process').spawn,
         argParser = require("./argumentParser"),
         VERSION = require('../package.json').version,
         PROPERTIES,
