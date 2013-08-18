@@ -68,7 +68,9 @@ function hardyCLI() {
 
     function controlNotRunningSelenium() {
         if (PROPERTIES.seleniumAction === 'start') {
-            var selenium = spawn('java', ['-jar', hardyPath + 'lib/selenium-server-standalone-2.32.0.jar']);
+            var selenium = spawn('java', ['-jar', hardyPath + 'lib/selenium-server-standalone-2.32.0.jar'], {
+                detached: true
+            });
             fs.writeFile(lockFile, selenium.pid, function(err) {
                 if (err) {
                     console.log(err);
@@ -86,8 +88,8 @@ function hardyCLI() {
     function controlRunningSelenium() {
         if (PROPERTIES.seleniumAction === 'stop') {
             if (PROPERTIES.seleniumPID) {
+                process.kill(PROPERTIES.seleniumPID); // sends SIGTERM
                 fs.unlinkSync(lockFile);
-                process.kill(PROPERTIES.seleniumPID, 'SIGHUP');
                 printMessageAndExit('Selenium stopped');
             } else {
                 printMessageAndExit('Cannot control external Selenium');
@@ -106,7 +108,7 @@ function hardyCLI() {
     function getSeleniumPID() {
         // is this our Selenium?
         if (fs.existsSync(lockFile)) {
-            return fs.readFileSync(lockFile);
+            return fs.readFileSync(lockFile, "utf8").trim();
         }
         return false;
     }
