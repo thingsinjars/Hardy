@@ -24,6 +24,7 @@ describe('HardyCLI: ', function() {
 			writeFile: jasmine.createSpy('fs.creating file').andCallFake(function(filename, content, callback) {
 				callback();
 			}),
+			writeFileSync: jasmine.createSpy('fs.creating file sync'),
 			mkdirSync: jasmine.createSpy('fs.mkdirSync'),
 			readFileSync: jasmine.createSpy('fs.readFileSync').andReturn('1234'),
 			unlinkSync: jasmine.createSpy('fs.unlinkSync').andReturn('1234')
