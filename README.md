@@ -20,6 +20,8 @@ The recommended way to install Hardy is via [npm](https://npmjs.org/):
 
 This will install Hardy as a global node module and put an executable `hardy` in your path. It will also include a local version of [Selenium v2.32.0]((http://docs.seleniumhq.org/) in case you don't have that already and a local copy of [PhantomJS v1.9.0]((http://phantomjs.org/)) for image diff test processing.
 
+_NOTE: Currently, the local install of PhantomJS will not be available for testing against unless you add it to your path.
+
 For best results, you'll also need a Selenium–capable browser. Firefox supports the WebDriver protocol by default so without specifying otherwise, tests will be run against Firefox. [PhantomJS](http://phantomjs.org/) also supports WebDriver.
 
 To run tests against Chrome, you will need to install [ChromeDriver](https://code.google.com/p/selenium/wiki/ChromeDriver).

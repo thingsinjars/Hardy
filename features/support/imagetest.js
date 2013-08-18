@@ -10,6 +10,7 @@ var _root = '.';
 var _count = 0;
 var webdriver;
 var exitStatus;
+var platform = require('os').platform();
 var _processRoot = process.cwd();
 
 exports.screenshot = screenshot;
@@ -27,7 +28,7 @@ function _fileNameGetter(_root, selector) {
     // Possibly use selector here for filename
     selector = selector.replace(/[\#\.\s:>]/g,'');
 
-    var name = _root + "/screenshot_" + webdriver.desiredCapabilities.browserName + '_' + selector + '_' + _count++;
+    var name = _root + "/" + platform + "_" + webdriver.desiredCapabilities.browserName + '_' + selector + '_' + _count++;
 
     if (fs.existsSync(name + '.png')) {
         return name + '.diff.png';

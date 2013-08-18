@@ -195,8 +195,7 @@ function hardyCLI() {
         command = hardyPath + 'node_modules/cucumber/bin/cucumber.js';
         environment = {
                 cwd: testPath,
-                stdio: 'inherit',
-                'phantomjs': hardyPath + 'node_modules/phantomjs/bin/phantomjs'
+                stdio: 'inherit'
             };
         if (PROPERTIES.logLevel === 'debug') {
             console.log(command, optionsArray, environment);
