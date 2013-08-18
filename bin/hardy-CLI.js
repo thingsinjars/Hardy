@@ -8,7 +8,8 @@ function hardyCLI() {
     var http = require("http"),
         fs = require('fs'),
         path = require('path'),
-        spawn = require('os').type() === 'Windows_NT' ? require('win-spawn') : require('child_process').spawn,
+        osType = require('os').type(),
+        spawn = osType === 'Windows_NT' ? require('win-spawn') : require('child_process').spawn,
         argParser = require("./argumentParser"),
         VERSION = require('../package.json').version,
         PROPERTIES,
@@ -90,7 +91,7 @@ function hardyCLI() {
             if (PROPERTIES.seleniumPID) {
                 process.kill(PROPERTIES.seleniumPID); // sends SIGTERM
                 fs.unlinkSync(lockFile);
-                printMessageAndExit('Selenium stopped');
+                printMessageAndExit(osType === 'Windows_NT' ? 'Cannot stop Selenium on Windows' : 'Selenium stopped');
             } else {
                 printMessageAndExit('Cannot control external Selenium');
             }
@@ -156,7 +157,7 @@ function hardyCLI() {
     }
 
     function buildChildProcess(browser) {
-        var optionsArray = [];
+        var command, optionsArray = [], environment;
 
         // Output style of Cucumber
         optionsArray.push("-f=progress");
@@ -191,20 +192,19 @@ function hardyCLI() {
         // Where to find our *.feature files
         optionsArray.push(testPath);
 
-
-        if (PROPERTIES.logLevel === 'debug') {
-            console.log(hardyPath + 'node_modules/cucumber/bin/cucumber.js', optionsArray, {
+        command = hardyPath + 'node_modules/cucumber/bin/cucumber.js';
+        environment = {
                 cwd: testPath,
-                stdio: 'inherit'
-            });
+                stdio: 'inherit',
+                'phantomjs': hardyPath + 'node_modules/phantomjs/bin/phantomjs'
+            };
+        if (PROPERTIES.logLevel === 'debug') {
+            console.log(command, optionsArray, environment);
         }
 
         // Spawn all the different browsers into separate child processes
         // but pipe the stdio and stderr back to the parent.
-        var testRun = spawn(hardyPath + 'node_modules/cucumber/bin/cucumber.js', optionsArray, {
-            cwd: testPath,
-            stdio: 'inherit'
-        });
+        var testRun = spawn(command, optionsArray, environment);
         testRun.on('exit', makeNext(browser));
     }
 
