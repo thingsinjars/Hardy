@@ -1,7 +1,10 @@
 Hardy
 ===
 
-(pre-release)
+(The Not-quite-ready-yet release)
+---
+
+_This is almost entirely working but not 100%. If you spot a problem, please [file an issue](https://github.com/thingsinjars/GhostStory/issues)._
 
 Hardy is a collection of CSS testing steps and a boilerplate testing setup to get you up-and-running with automated CSS testing as quickly as possible. Tests are written in Cucumber and use Selenium. Hardy runs on Node.js and therefore all the example CSS test helpers are written in JS. The functionality behind them can easily be reused in any test setup, whether your tests are written in Java, Ruby or anything else.
 
@@ -9,7 +12,7 @@ This is a refactor of the original GhostStory project to run against Selenium us
 
 The structure of this project and the WebDriverJS bindings are from [WebDriverJS](https://github.com/camme/webdriverjs).
 
-![image](https://raw.github.com/thingsinjars/hardy.io/master/assets/small-logo.png)
+![image](https://raw.github.com/thingsinjars/hardy.io/94b2744df96f17020ba17bfcf279ba52907a4abf/assets/small-logo.png)
 
 Installation
 ---
@@ -20,13 +23,15 @@ The recommended way to install Hardy is via [npm](https://npmjs.org/):
 
 This will install Hardy as a global node module and put an executable `hardy` in your path. It will also include a local version of [Selenium v2.32.0]((http://docs.seleniumhq.org/) in case you don't have that already and a local copy of [PhantomJS v1.9.0]((http://phantomjs.org/)) for image diff test processing.
 
-_NOTE: Currently, the local install of PhantomJS will not be available for testing against unless you add it to your path.
+_NOTE: Currently, the local install of PhantomJS will not be available for testing against unless you add it to your path._
 
 For best results, you'll also need a Selenium–capable browser. Firefox supports the WebDriver protocol by default so without specifying otherwise, tests will be run against Firefox. [PhantomJS](http://phantomjs.org/) also supports WebDriver.
 
 To run tests against Chrome, you will need to install [ChromeDriver](https://code.google.com/p/selenium/wiki/ChromeDriver).
 
 To run tests against Internet Explorer, you will need [InternetExplorerDriver](https://code.google.com/p/selenium/wiki/InternetExplorerDriver).
+
+To run Selenium at all, you'll need [Java](http://java.com/en/download/index.jsp).
 
 Getting started
 ---
@@ -82,13 +87,13 @@ Add the following to your .travis.yml:
       - export DISPLAY=:99.0
       - sh -e /etc/init.d/xvfb start
       - node_modules/hardy/bin/hardy selenium start
-      - firefox --version
-      - phantomjs --version
-      - grunt server:travis&
-      - sleep 15
+      - {BUILD YOUR STATIC SITE HERE}
+      - python -m SimpleHTTPServer&
     
 And finally, add this to your package.json `scripts` object:
 
     "scripts": {
       "test": "node_modules/hardy/bin/hardy --browser=firefox,phantom <PATH TO YOUR TEST FOLDER>"
     },
+
+For more detail, read the [continuous integration guide on the Hardy site](http://hardy.io/continuous-integration.html).
