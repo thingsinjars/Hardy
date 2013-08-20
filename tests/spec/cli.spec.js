@@ -92,7 +92,7 @@ describe('HardyCLI: ', function() {
 		it('Refuses to initialise a non-empty directory', function() {
 			var HardyCLI;
 
-			fsMock.existsSync = jasmine.createSpy('fs.exists').andReturn(true)
+			fsMock.existsSync = jasmine.createSpy('fs.exists').andReturn(true);
 
 			mockery.registerMock('fs', fsMock);
 			mockery.enable({
@@ -134,7 +134,7 @@ describe('HardyCLI: ', function() {
 		var seleniumProperties;
 
 		beforeEach(function() {
-			console.log.reset()
+			console.log.reset();
 			mockery.registerAllowable('path');
 			mockery.registerAllowable('./argumentParser');
 			mockery.registerAllowable('../package.json');
@@ -153,7 +153,7 @@ describe('HardyCLI: ', function() {
 
 
 		it('starts selenium when selenium is not running', function() {
-			httpMock.on = function(state, fail) {fail();}
+			httpMock.on = function(state, fail) {fail();};
 
 			mockery.registerMock('fs', fsMock);
 			mockery.registerMock('http', httpMock);
@@ -168,9 +168,9 @@ describe('HardyCLI: ', function() {
 
 		});
 		it('stops selenium', function() {
-			httpMock.get = function(url, success) {success(); return httpMock;}
-			httpMock.on = function(state, fail) {fail();}
-			fsMock.existsSync = function(lockFile) {return true;}
+			httpMock.get = function(url, success) {success(); return httpMock;};
+			httpMock.on = function(state, fail) {fail();};
+			fsMock.existsSync = function(lockFile) {return true;};
 
 			seleniumProperties.seleniumAction = 'stop';
 
@@ -186,9 +186,9 @@ describe('HardyCLI: ', function() {
 			expect(console.log).toHaveBeenCalledWith("Selenium stopped");
 		});
 		it('cannot stop external selenium', function() {
-			httpMock.get = function(url, success) {success(); return httpMock;}
-			httpMock.on = function(state, fail) {}
-			fsMock.existsSync = function(lockFile) {return false;}
+			httpMock.get = function(url, success) {success(); return httpMock;};
+			httpMock.on = function(state, fail) {};
+			fsMock.existsSync = function(lockFile) {return false;};
 
 			seleniumProperties.seleniumAction = 'stop';
 			delete seleniumProperties.seleniumPID;
