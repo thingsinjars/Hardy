@@ -31,14 +31,14 @@ describe('CSS Steps: ', function() {
 				if (a === b) {
 					return true;
 				} else {
-					throw new Error('Assertion error')
+					throw new Error('Assertion error');
 				}
 			}),
 			ok: jasmine.createSpy('assert ok').andCallFake(function(a, message) {
 				if (a) {
 					return a;
 				} else {
-					throw new Error('Assertion error')
+					throw new Error('Assertion error');
 				}
 			})
 		};
@@ -48,7 +48,7 @@ describe('CSS Steps: ', function() {
 		selectorsMock = function() {
 			return 'mock > selector';
 		};
-		
+
 		cucumberThens = [];
 		cucumberGivens = [];
 		cucumberMock = {

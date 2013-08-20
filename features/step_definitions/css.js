@@ -46,8 +46,9 @@ module.exports = function() {
     shouldHaveOffsetPropertyOfValue = function(elementName, property, value, callback) {
         var elementSelector = selectors(elementName),
             message = '"' + elementName + '" should have offset ' + property + ' of ' + value,
-            index = property==='top'?'y':'x',
-            value = value.replace(/px/,'');
+            index = property==='top'?'y':'x';
+
+        value = value.replace(/px/,'');
 
         this.getLocation(elementSelector, function(err, measuredValue) {
             if (err) {
@@ -139,8 +140,8 @@ module.exports = function() {
     shouldLookTheSameAsBefore = function(elementName, callback) {
         var elementSelector = selectors(elementName);
         imageTest.init({
-            screenshotRoot: process.env['TESTPATH'] + '/screenshots',
-            processRoot: process.env['BINARYPATH'],
+            screenshotRoot: process.env.TESTPATH + '/screenshots',
+            processRoot: process.env.BINARYPATH,
             webdriver: this
         });
         imageTest.screenshot(elementSelector, function(err, result) {

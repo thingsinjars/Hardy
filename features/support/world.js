@@ -25,8 +25,8 @@ module.exports = function(callback) {
 
         });
 
-        process.env['BINARYPATH'] = PROPERTIES.binaryPath;
-        process.env['TESTPATH'] = PROPERTIES.testPath;
+        process.env.BINARYPATH = PROPERTIES.binaryPath;
+        process.env.TESTPATH = PROPERTIES.testPath;
 
         console.log('Loading browser ' + PROPERTIES.browser);
         var browser = require("webdriverjs").remote({

@@ -15,9 +15,9 @@ describe('Selectors map: ', function() {
 
 	beforeEach(function() {
 		pathMock = {
-			resolve: function() {return 'MOCKPATH'}
+			resolve: function() {return 'MOCKPATH';}
 		};
-		process.env['TESTPATH'] = '';
+		process.env.TESTPATH = '';
 		selectorMap = {
 			"test name": "mocked > selector",
 			"other name": ".another .mocked .selector"
