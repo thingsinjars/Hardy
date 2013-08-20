@@ -4,7 +4,7 @@
   "description": "A collection of steps to run CSS tests using Cucumber and Selenium",
   "homepage": "http://hardy.io/",
   "bugs": {
-    "url": "https://github.com/thingsinjars/GhostStory/issues"
+    "url": "https://github.com/thingsinjars/Hardy/issues"
   },
   "keywords": [
     "cucumber",
@@ -32,7 +32,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/thingsinjars/GhostStory.git"
+    "url": "https://github.com/thingsinjars/Hardy.git"
   },
   "dependencies": {
     "cucumber": "0.3.0",

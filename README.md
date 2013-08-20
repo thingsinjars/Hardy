@@ -4,7 +4,7 @@ Hardy
 (The Not-quite-ready-yet release)
 ---
 
-_This is almost entirely working but not 100%. If you spot a problem, please [file an issue](https://github.com/thingsinjars/GhostStory/issues)._
+_This is almost entirely working but not 100%. If you spot a problem, please [file an issue](https://github.com/thingsinjars/Hardy/issues)._
 
 Hardy is a collection of CSS testing steps and a boilerplate testing setup to get you up-and-running with automated CSS testing as quickly as possible. Tests are written in Cucumber and use Selenium. Hardy runs on Node.js and therefore all the example CSS test helpers are written in JS. The functionality behind them can easily be reused in any test setup, whether your tests are written in Java, Ruby or anything else.
 
@@ -72,7 +72,7 @@ To verify Hardy is working as it should, unit and acceptance tests are available
     
 The tests are automatically run on every commit to the main repo. Currently building on Travis CI:
 
-[![Build Status](https://travis-ci.org/thingsinjars/GhostStory.png)](https://travis-ci.org/thingsinjars/GhostStory)
+[![Build Status](https://travis-ci.org/thingsinjars/Hardy.png)](https://travis-ci.org/thingsinjars/Hardy)
 
 Travis Integration
 ---
