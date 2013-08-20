@@ -1,4 +1,4 @@
-Hardy
+[Hardy](http://hardy.io/)
 ===
 
 (The Not-quite-ready-yet release)
@@ -6,13 +6,15 @@ Hardy
 
 _This is almost entirely working but not 100%. If you spot a problem, please [file an issue](https://github.com/thingsinjars/Hardy/issues)._
 
-Hardy is a collection of CSS testing steps and a boilerplate testing setup to get you up-and-running with automated CSS testing as quickly as possible. Tests are written in Cucumber and use Selenium. Hardy runs on Node.js and therefore all the example CSS test helpers are written in JS. The functionality behind them can easily be reused in any test setup, whether your tests are written in Java, Ruby or anything else.
+[Hardy](http://hardy.io/) is a collection of CSS testing steps and a boilerplate testing setup to get you up-and-running with automated CSS testing as quickly as possible. Tests are written in Cucumber and use Selenium. Hardy runs on Node.js and therefore all the example CSS test helpers are written in JS. The functionality behind them can easily be reused in any test setup, whether your tests are written in Java, Ruby or anything else.
 
 This is a refactor of the original GhostStory project to run against Selenium using WebDriverJS. The original collection of CSS testing steps were written specifically for CasperJS and PhantomJS but now that PhantomJS supports the WebDriver protocol, we're now going via Selenium so that tests can be run against any browser.
 
 The structure of this project and the WebDriverJS bindings are from [WebDriverJS](https://github.com/camme/webdriverjs).
 
 ![image](https://raw.github.com/thingsinjars/hardy.io/94b2744df96f17020ba17bfcf279ba52907a4abf/assets/small-logo.png)
+
+Read more at [Hardy.io](http://hardy.io/).
 
 Installation
 ---
