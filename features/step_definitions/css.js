@@ -13,9 +13,12 @@ module.exports = function() {
     shouldHavePropertyOfValue = function(elementName, property, value, callback) {
         var elementSelector = selectors(elementName);
         var message = '"' + elementName + '" should have ' + property + ' of ' + value;
+
+        // Ensure we're comparing the same units
         if (utils.isColor(value)) {
             value = utils.toRgba(value);
         }
+
         this.getCssProperty(elementSelector, property, function(err, measuredValue) {
             if (err) {
                 if (typeof err === "object") {
@@ -24,6 +27,13 @@ module.exports = function() {
                 // console.error("Hardy :: Failed to get CSS property, ", err);
                 // console.error("Hardy :: Could not find element '%s'", elementSelector);
                 return callback.fail(err);
+            }
+
+            // The browser may report fonts with quotes which don't make it through
+            // from the test file (because of the RegEx). Get rid of quotes on both sides
+            if (/font-/.test(property)) {
+                measuredValue = measuredValue.replace(/"/g, "'");
+                value = value.replace(/"/g, "'");
             }
 
             message += ", measured: " + measuredValue;
@@ -41,14 +51,43 @@ module.exports = function() {
     };
     this.Then(/^"([^"]*)" should have "([^"]*)" of "([^"]*)"$/, shouldHavePropertyOfValue);
 
+    /* "<Then> the <element> should have <property> of <value>( or <value>)" */
+    // Map the given name to the selector then find that element in the page
+    // The measured value of the property should be within the list provided
+    shouldHavePropertyOfValueOrValue = function() {
+        var elementName = arguments[0],
+            property = arguments[1],
+            callback = arguments[arguments.length - 1],
+            values = Array.prototype.slice.call(arguments, 2, arguments.length - 1),
+            i, l, callCount;
+
+
+        callCount = values.length;
+
+        function orCallback(err, result) {
+            if (err) {
+                return callback.fail(err);
+            }
+            callCount--;
+            if (callCount === 0) {
+                callback(null, result);
+            }
+        }
+        orCallback.fail = callback.fail;
+        for (i = 0, l = values.length; i < l; i++) {
+            shouldHavePropertyOfValue(elementName, property, value, orCallback);
+        }
+    };
+    this.Then(/^"([^"]*)" should have "([^"]*)" of "([^"]*)"( or "([^"]*)")+$/, shouldHavePropertyOfValueOrValue);
+
     /* "<Then> <element> should have offset <top|left> of <value>" */
     // Calculates the exact offset of the element regardless of the specified styles
     shouldHaveOffsetPropertyOfValue = function(elementName, property, value, callback) {
         var elementSelector = selectors(elementName),
             message = '"' + elementName + '" should have offset ' + property + ' of ' + value,
-            index = property==='top'?'y':'x';
+            index = property === 'top' ? 'y' : 'x';
 
-        value = value.replace(/px/,'');
+        value = value.replace(/px/, '');
 
         this.getLocation(elementSelector, function(err, measuredValue) {
             if (err) {
