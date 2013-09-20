@@ -13,6 +13,22 @@ module.exports = function () {
         }
     });
 
+    /* "<Given> I wait for <N> seconds" */
+    this.Given(/^I wait for "([^"]*)" seconds$/, function (seconds, callback) {
+        this.pause(seconds*1000, callback);
+    });
+
+    /* "<Given> I wait for <selector> to be present" */ /* ! Maximum of 30 seconds ! */
+    this.Given(/^I wait for "([^"]*)" to be present$/, function (selector, callback) {
+        selector = selectors(selector);
+        this.waitFor(selector, 30000, function (err, result) {
+            if(err) {
+                return callback.fail(JSON.stringify(err));
+            }
+            callback();
+        });
+    });
+
     // "<Given> the window size is <width> by <height>"
     // Set the browser window size to the specified one
     windowSizeIs = function(width, height, callback) {
@@ -27,7 +43,7 @@ module.exports = function () {
         selector = selectors(selector);
         this.waitFor(selector, 1000, function (err, result) {
             if(err) {
-                return callback.fail(err);
+                return callback.fail(JSON.stringify(err));
             }
             return this.setValue(selector, text, callback);
         });
