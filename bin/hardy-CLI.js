@@ -69,6 +69,9 @@ function hardyCLI() {
 
     function controlNotRunningSelenium() {
         if (PROPERTIES.seleniumAction === 'start') {
+            if (PROPERTIES.logLevel === 'debug') {
+                console.log('java', ['-jar', hardyPath + 'lib/selenium-server-standalone-2.32.0.jar'], {detached: true});
+            }
             var selenium = spawn('java', ['-jar', hardyPath + 'lib/selenium-server-standalone-2.32.0.jar'], {
                 detached: true
             });
