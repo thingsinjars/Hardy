@@ -61,6 +61,7 @@ function hardyCLI() {
     function createTestFolder() {
         fs.writeFileSync('test.feature', "Feature:");
         fs.mkdirSync('screenshots');
+        fs.mkdirSync('screenshots/tmp');
         fs.mkdirSync('step_definitions');
         fs.writeFileSync('step_definitions/custom.js', "");
         fs.writeFileSync('selectors.js', "module.exports = {};");
