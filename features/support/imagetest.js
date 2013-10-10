@@ -111,7 +111,7 @@ function compare(filename, callback) {
             if (code === 0) {
                 callback();
             } else {
-                callback.fail(new Error("Images don't match"));
+                callback.fail(new Error("Images don't match: " + filename));
             }
         });
     }
