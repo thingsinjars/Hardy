@@ -5,7 +5,8 @@ module.exports = function (argv) {
     var PROPERTIES = {
         fail: false,
         browser: 'firefox',
-        logLevel: 'silent'
+        logLevel: 'silent',
+        configFile : ''
     };
 
     // Cannot run hardy without arguments

@@ -18,6 +18,7 @@ function hardyCLI() {
         numberOfRuns, currentRun,
         hardyPath = path.resolve(require.main.filename, '../..') + '/',
         testPath,
+        configFile = null,
         lockFile = hardyPath + '.seleniumlock';
 
 
@@ -170,6 +171,11 @@ function hardyCLI() {
 
             testFolder = process.argv[process.argv.length - 1];
             testPath = path.resolve(testFolder);
+            
+            if (PROPERTIES.configFile && fs.lstatSync(testPath + "/" + PROPERTIES.configFile)) {
+                configFile = testPath + "/" + PROPERTIES.configFile;
+            }
+
             browsersToTest = PROPERTIES.browser.split(',');
             numberOfRuns = browsersToTest.length;
             currentRun = 0;
@@ -212,6 +218,11 @@ function hardyCLI() {
 
         // Path to the local test folder
         optionsArray.push("--testPath=" + testPath);
+
+        // Config file
+        if (configFile) {
+            optionsArray.push("--configFile=" + configFile);
+        }
 
         // Where to find our *.feature files
         optionsArray.push(testPath);

@@ -178,10 +178,17 @@ module.exports = function() {
     /* Image Diff test */
     shouldLookTheSameAsBefore = function(elementName, callback) {
         var elementSelector = selectors(elementName);
+        var config = {};
+
+	if (process.env.CONFIGFILE) {
+	    config = require(process.env.CONFIGFILE);
+        }
+
         imageTest.init({
             screenshotRoot: process.env.TESTPATH + '/screenshots',
             processRoot: process.env.BINARYPATH,
-            webdriver: this
+            webdriver: this,
+            fileNameGetter : config.fileNameGetter || false
         });
         imageTest.screenshot(elementSelector, function(err, result) {
             if (err) {

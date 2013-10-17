@@ -7,5 +7,7 @@
 
     "binaryPath": ".",
 
-    "testPath": "."
+    "testPath": ".",
+
+    "configFile" : ""
 }
