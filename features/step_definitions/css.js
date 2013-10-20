@@ -189,12 +189,9 @@ module.exports = function() {
             }
             if (result.status === 'firstrun') {
                 console.log("\n -- Notice: --");
-                console.log(" First time this test with selector named:'" +
-                                elementName +
-                                "' has been run and new test cases have been created");
+                console.log(" First time this test with selector named:'" + elementName + "' has been run and new test cases have been created");
                 return callback();
-            }
-            else {
+            } else {
                 imageTest.compare(result.value, callback);
             }
         });

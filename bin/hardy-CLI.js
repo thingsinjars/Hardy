@@ -88,7 +88,9 @@ function hardyCLI() {
     function controlNotRunningSelenium() {
         if (PROPERTIES.seleniumAction === 'start') {
             if (PROPERTIES.logLevel === 'debug') {
-                console.log('java', ['-jar', hardyPath + 'lib/selenium-server-standalone-2.32.0.jar'], {detached: true});
+                console.log('java', ['-jar', hardyPath + 'lib/selenium-server-standalone-2.32.0.jar'], {
+                    detached: true
+                });
             }
             var selenium = spawn('java', ['-jar', hardyPath + 'lib/selenium-server-standalone-2.32.0.jar'], {
                 detached: true
@@ -178,7 +180,8 @@ function hardyCLI() {
     }
 
     function buildChildProcess(browser) {
-        var command, optionsArray = [], environment;
+        var command, optionsArray = [],
+            environment;
 
         // Output style of Cucumber
         optionsArray.push("-f=progress");
@@ -215,9 +218,9 @@ function hardyCLI() {
 
         command = hardyPath + 'node_modules/cucumber/bin/cucumber.js';
         environment = {
-                cwd: testPath,
-                stdio: 'inherit'
-            };
+            cwd: testPath,
+            stdio: 'inherit'
+        };
         if (PROPERTIES.logLevel === 'debug') {
             console.log(command, optionsArray, environment);
         }
@@ -281,18 +284,23 @@ function hardyCLI() {
     }
 
     function cleanDirectory(dirPath) {
-      try { var files = fs.readdirSync(dirPath); }
-      catch(e) { return; }
-      if (files.length > 0)
-        for (var i = 0; i < files.length; i++) {
-          var filePath = dirPath + '/' + files[i];
-          if (fs.statSync(filePath).isFile())
-            fs.unlinkSync(filePath);
-          else
-            cleanDirectory(filePath);
+        try {
+            var files = fs.readdirSync(dirPath);
+        } catch (e) {
+            return;
         }
-      fs.rmdirSync(dirPath);
-    };
+        if (files.length > 0) {
+            for (var i = 0; i < files.length; i++) {
+                var filePath = dirPath + '/' + files[i];
+                if (fs.statSync(filePath).isFile()) {
+                    fs.unlinkSync(filePath);
+                } else {
+                    cleanDirectory(filePath);
+                }
+            }
+        }
+        fs.rmdirSync(dirPath);
+    }
 
     return {
         PROPERTIES: PROPERTIES,
