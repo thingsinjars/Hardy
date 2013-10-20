@@ -109,6 +109,26 @@ describe('HardyCLI: ', function() {
 
 		});
 
+		it('Cleans the screenshot directory', function() {
+			var HardyCLI;
+
+			fsMock.existsSync = jasmine.createSpy('fs.exists').andReturn(true);
+
+			mockery.registerMock('fs', fsMock);
+			mockery.enable({
+				useCleanCache: true
+			});
+			HardyCLI = require(basedir + 'bin/hardy-CLI');
+
+			HardyCLI.init({
+				clean: true
+			});
+
+			expect(console.log).toHaveBeenCalledWith("Directory initialised");
+			expect(process.exit).toHaveBeenCalledWith(1);
+
+		});
+
 		it('reads the Selenium lock', function() {
 			var HardyCLI;
 

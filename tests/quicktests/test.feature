@@ -13,3 +13,6 @@ Given I visit "http://localhost:8000/fixtures/timeout.html"
 And I wait for "div" to be present
 Then "div" should have "background-color" of "rgba(0, 255, 0, 1)"
 
+Given I visit "http://localhost:8000/fixtures/timeout.html"
+Then "p" should look the same as before
+

@@ -44,6 +44,19 @@ function hardyCLI() {
                     printMessageAndExit('Directory initialised');
                 }
 
+            } else if (PROPERTIES.clean) {
+
+                // Check the screenshot directory exists. If it doesn't, there's nothing to clean
+                if (!fs.existsSync('screenshots/')) {
+                    printMessageAndExit('screenshot directory does not exist', 1);
+
+                } else {
+                    // Directory is there, let's remove everything in it
+                    cleanDirectory('screenshots');
+                    createScreenshotsFolder();
+                    printMessageAndExit('Directory initialised');
+                }
+
             } else {
                 // Not just initialising a new folder
 
@@ -58,10 +71,14 @@ function hardyCLI() {
         }
     }
 
-    function createTestFolder() {
-        fs.writeFileSync('test.feature', "Feature:");
+    function createScreenshotsFolder() {
         fs.mkdirSync('screenshots');
         fs.mkdirSync('screenshots/tmp');
+    }
+
+    function createTestFolder() {
+        fs.writeFileSync('test.feature', "Feature:");
+        createScreenshotsFolder();
         fs.mkdirSync('step_definitions');
         fs.writeFileSync('step_definitions/custom.js', "");
         fs.writeFileSync('selectors.js', "module.exports = {};");
@@ -262,6 +279,20 @@ function hardyCLI() {
             }
         };
     }
+
+    function cleanDirectory(dirPath) {
+      try { var files = fs.readdirSync(dirPath); }
+      catch(e) { return; }
+      if (files.length > 0)
+        for (var i = 0; i < files.length; i++) {
+          var filePath = dirPath + '/' + files[i];
+          if (fs.statSync(filePath).isFile())
+            fs.unlinkSync(filePath);
+          else
+            cleanDirectory(filePath);
+        }
+      fs.rmdirSync(dirPath);
+    };
 
     return {
         PROPERTIES: PROPERTIES,

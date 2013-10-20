@@ -16,6 +16,9 @@ module.exports = function (argv) {
         // If this is simply a call to initialise the current directory with default test setup
         if (process.argv[2] === 'init') {
             PROPERTIES.init = true;
+        // Remove all existing screenshots from image diffs
+        } else if (process.argv[2] === 'clean') {
+            PROPERTIES.clean = true;
         // Not just initialising a new folder
         } else {
             if (process.argv[2] === 'selenium') {
