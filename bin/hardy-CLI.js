@@ -172,7 +172,7 @@ function hardyCLI() {
             testFolder = process.argv[process.argv.length - 1];
             testPath = path.resolve(testFolder);
             
-            if (PROPERTIES.configFile && fs.lstatSync(testPath + "/" + PROPERTIES.configFile)) {
+            if (PROPERTIES.configFile && fs.existsSync(testPath + "/" + PROPERTIES.configFile)) {
                 configFile = testPath + "/" + PROPERTIES.configFile;
             }
 

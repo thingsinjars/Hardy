@@ -18,4 +18,3 @@ Then "p" should look the same as before
 
 Given I visit "http://localhost:8000/fixtures/timeout.html"
 Then "p span" should look the same as before
-
