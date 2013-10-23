@@ -129,24 +129,35 @@ describe('CSS Steps: ', function() {
 		describe('"<selector> should have <property> of <comparator> than <value>"', function() {
 			it('should pass when the comparison is true', function() {
 				cucumberMock.getCssProperty = jasmine.createSpy('measure CSS property from browser instance').andCallFake(function(elementSelector, property, callback) {
-					callback(null, 10);
+					callback(null, 8);
 				});
 
 
 				cucumberThens['/^"([^"]*)" should have "([^"]*)" of ([^"]*) than "([^"]*)"$/'].call(cucumberMock, 'mockElementName', 'mockProperty', 'less', '9', callbackMock);
 				expect(cucumberMock.getCssProperty).toHaveBeenCalled();
 				expect(assertMock.ok).toHaveBeenCalled();
-				expect(callbackMock.fail).toHaveBeenCalled();
+				expect(callbackMock.fail).not.toHaveBeenCalled();
+			});
+			it('should cope with floating point values', function() {
+				cucumberMock.getCssProperty = jasmine.createSpy('measure CSS property from browser instance').andCallFake(function(elementSelector, property, callback) {
+					callback(null, 26.6667);
+				});
+
+
+				cucumberThens['/^"([^"]*)" should have "([^"]*)" of ([^"]*) than "([^"]*)"$/'].call(cucumberMock, 'mockElementName', 'mockProperty', 'greater', '26', callbackMock);
+				expect(cucumberMock.getCssProperty).toHaveBeenCalled();
+				expect(assertMock.ok).toHaveBeenCalled();
+				expect(callbackMock.fail).not.toHaveBeenCalled();
 			});
 			it('should fail when the comparison is false', function() {
 				cucumberMock.getCssProperty = jasmine.createSpy('measure CSS property from browser instance').andCallFake(function(elementSelector, property, callback) {
-					callback(null, 10);
+					callback(null, 8);
 				});
 
 				cucumberThens['/^"([^"]*)" should have "([^"]*)" of ([^"]*) than "([^"]*)"$/'].call(cucumberMock, 'mockElementName', 'mockProperty', 'greater', '9', callbackMock);
 				expect(cucumberMock.getCssProperty).toHaveBeenCalled();
 				expect(assertMock.ok).toHaveBeenCalled();
-				expect(callbackMock.fail).not.toHaveBeenCalled();
+				expect(callbackMock.fail).toHaveBeenCalled();
 			});
 		});
 
