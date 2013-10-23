@@ -21,7 +21,7 @@ module.exports = function () {
     /* "<Given> I wait for <selector> to be present" */ /* ! Maximum of 30 seconds ! */
     this.Given(/^I wait for "([^"]*)" to be present$/, function (selector, callback) {
         selector = selectors(selector);
-        this.waitFor(selector, 30000, function (err, result) {
+        this.waitFor(selector, 5000, function (err, result) {
             if(err) {
                 return callback.fail(JSON.stringify(err));
             }
