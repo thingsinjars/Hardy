@@ -123,7 +123,7 @@ module.exports = function() {
 
         var message = elementName + ' should have ' + property + ' of ' + comparator + ' than ' + value;
 
-        value = parseInt(value, 10);
+        value = parseFloat(value, 10);
 
         // Special case for width and height which, if unset, default to auto
         // A few other things do as well but these are the most common.
@@ -134,7 +134,7 @@ module.exports = function() {
                 }
                 measuredValue = measuredValue[property];
                 // compare(value, measuredValue, message, callback);
-                measuredValue = parseInt(measuredValue, 10);
+                measuredValue = parseFloat(measuredValue, 10);
                 message += ' (' + measuredValue + ')';
                 if (comparator === 'less') {
                     try {
@@ -156,7 +156,7 @@ module.exports = function() {
                 if (err) {
                     callback.fail(err);
                 }
-                measuredValue = parseInt(measuredValue, 10);
+                measuredValue = parseFloat(measuredValue, 10);
                 message += ' (' + measuredValue + ')';
                 if (comparator === 'less') {
                     try {
