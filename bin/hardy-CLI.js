@@ -190,7 +190,7 @@ function hardyCLI() {
             environment;
 
         // Output style of Cucumber
-        optionsArray.push("-f=progress");
+        optionsArray.push("-f=" + PROPERTIES.reportFormat);
 
         // Get Cucumber to load our CSS test helpers and world files first
         optionsArray.push("-r=" + hardyPath + 'features/');
