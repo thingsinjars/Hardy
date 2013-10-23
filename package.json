@@ -1,6 +1,6 @@
 {
   "name": "hardy",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A collection of steps to run CSS tests using Cucumber and Selenium",
   "homepage": "http://hardy.io/",
   "bugs": {
