@@ -5,7 +5,7 @@ module.exports = function (argv) {
     var PROPERTIES = {
         fail: false,
         browser: 'firefox',
-        logLevel: 'silent',
+        logLevel: 'info',
         reportFormat: 'progress',  // cucumber report format
         configFile : ''
     };

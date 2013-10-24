@@ -1,8 +1,9 @@
+var logger = require("./logger")();
 module.exports = function () {
   
   this.After(function(callback) {
 
-    console.log('Shutting down browser');
+    logger.info('Shutting down browser');
     
     this.end(callback);
 

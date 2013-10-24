@@ -4,7 +4,7 @@ module.exports = (function() {
     // When measured via computedStyles, most browsers return rgba
     // so we'll need to convert everything to rgba to measure it
     // without forcing all story files to be written with rgba in mind.
-    console.log('CSS Utils Steps Loaded');
+    // console.log('CSS Utils Steps Loaded');
     // this.World = require('../support/world.js');
 
     var exports = {};

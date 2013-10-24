@@ -1,3 +1,4 @@
+var Logger = require("./logger");
 module.exports = function(callback) {
 
     if (callback) {
@@ -28,10 +29,14 @@ module.exports = function(callback) {
         process.env.BINARYPATH = PROPERTIES.binaryPath;
         process.env.TESTPATH = PROPERTIES.testPath;
         process.env.CONFIGFILE = PROPERTIES.configFile;
+        process.env.LOGLEVEL = PROPERTIES.logLevel;
 
-        console.log('Loading browser ' + PROPERTIES.browser);
+        logger = Logger(PROPERTIES.logLevel);
+
+        logger.info('Loading browser ' + PROPERTIES.browser);
+
         var browser = require("webdriverjs").remote({
-            logLevel: PROPERTIES.logLevel || 'none',
+            logLevel: PROPERTIES.logLevel === 'info' ? 'silent' : (PROPERTIES.logLevel || 'silent'),
             host: PROPERTIES.host,
             desiredCapabilities: {
                 browserName: PROPERTIES.browser || 'firefox'

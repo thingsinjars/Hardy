@@ -1,10 +1,11 @@
 module.exports = function() {
-    console.log('CSS Steps Loaded');
+    // console.log('CSS Steps Loaded');
     this.World = require('../support/world.js');
     var imageTest = require('../support/imagetest'),
         utils = require('../support/css-utils'),
         assert = require('assert'),
         selectors = require('../support/selectors.js'),
+        logger = require("../support/logger")(),
         config = require('../support/config.js');
     var shouldHavePropertyOfValue, shouldHavePropertyOfValueOrValue,
         shouldHaveOffsetPropertyOfValue, shouldHavePropertyOfComparatorThanValue,
@@ -97,7 +98,7 @@ module.exports = function() {
                 if (typeof err === "object") {
                     err = JSON.stringify(err);
                 }
-                console.error("Hardy :: Failed to execute script, ", err);
+                logger.error("Hardy :: Failed to execute script, ", err);
                 return callback.fail(err);
             }
 
@@ -193,8 +194,7 @@ module.exports = function() {
                 return callback.fail(err);
             }
             if (result.status === 'firstrun') {
-                console.log("\n -- Notice: --");
-                console.log(" First time this test with selector named:'" + elementName + "' has been run and new test cases have been created");
+                logger.notice(" First time this test with selector named:'" + elementName + "' has been run and new test cases have been created");
                 return callback();
             } else {
                 imageTest.compare(result.value, callback);

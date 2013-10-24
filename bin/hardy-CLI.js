@@ -206,7 +206,7 @@ function hardyCLI() {
         }
 
         // Set the WebDriverJS logLevel if it has been supplied
-        if (PROPERTIES.logLevel && PROPERTIES.logLevel !== 'silent') {
+        if (PROPERTIES.logLevel) {
             optionsArray.push("--logLevel=" + PROPERTIES.logLevel);
         }
 
