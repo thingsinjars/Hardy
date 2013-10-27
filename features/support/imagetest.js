@@ -9,7 +9,8 @@ var _root = '.';
 var _count = 0;
 var webdriver;
 var platform = require('os').platform();
-var _cropImage, _compareImages;
+var logger = require("./logger")();
+var _cropImage, _compareImages, _createImageDiff;
 
 exports.screenshot = screenshot;
 exports.compare = compare;
@@ -21,6 +22,7 @@ function init(options) {
     _fileNameGetter = options.fileNameGetter || _fileNameGetter;
     _cropImage = options.cropImage;
     _compareImages = options.compareImages;
+    _createImageDiff = options.createImageDiff;
 }
 
 function _fileNameGetter(_root, selector, webdriver) {
@@ -99,16 +101,41 @@ function compare(filename, callback) {
     if (!fs.existsSync(baseFile)) {
         return callback(new Error(baseFile + " does not exist"));
     } else {
-
         _compareImages(baseFile, filename, function(res) {
-            if (res) {
+            if (res === true) { // visually equal
                 callback();
-            }
-            else {
-                callback.fail( new Error("Latest image does not match baseline: " + baseFile) );
+            } else {  // not visually equal
+                if (_createImageDiff) {  // create a visual difference file and then fail
+                    generateImageDiff(baseFile, filename, callback);
+                } else {
+                    invokeMismatchFailure(callback, baseFile);
+
+                }
             }
         });
     }
+}
+
+// Create a visual difference file for the two files.
+function generateImageDiff(baseFile, newFile, callback) {
+
+    var visDiffFile = newFile.replace(".diff", ".visdiff");  // Eventually, we should come up with better names
+
+    _createImageDiff(baseFile, newFile, visDiffFile, function(err)  {
+        if (err) {
+            callback.fail("Error creating visual diff file: " + err);
+        }
+        else
+        {
+            logger.warning("\tImages do not match. Generated visual difference file: " +  visDiffFile);
+            invokeMismatchFailure(callback, baseFile);
+
+        }
+    });
+}
+
+function invokeMismatchFailure(callback, baseFile) {
+    callback.fail(new Error("Generated image does not match baseline: " + baseFile) );
 }
 
 module.exports = exports;

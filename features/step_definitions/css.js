@@ -3,7 +3,8 @@ module.exports = function() {
     this.World = require('../support/world.js');
     var imageTest = require('../support/imagetest'),
         utils = require('../support/css-utils'),
-        ghostUtils = require('../support/ghostutils'),
+        ghostUtils = require('../support/ghost-image-utils'),
+        gmUtils = require('../support/gm-image-utils'),
         assert = require('assert'),
         selectors = require('../support/selectors.js'),
         logger = require("../support/logger")(),
@@ -189,8 +190,9 @@ module.exports = function() {
             processRoot: process.env.BINARYPATH,
             webdriver: this,
             fileNameGetter: config('fileNameGetter') || false,
-            cropImage:ghostUtils.cropImage,
-            compareImages:ghostUtils.compareImages
+            cropImage:gmUtils.cropImage,
+            compareImages:gmUtils.compareImages,
+            createImageDiff:gmUtils.createImageDiff
         });
         imageTest.screenshot(elementSelector, function(err, result) {
             if (err) {
