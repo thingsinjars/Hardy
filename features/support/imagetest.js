@@ -129,7 +129,6 @@ function generateImageDiff(baseFile, newFile, callback) {
         {
             logger.warning("\tImages do not match. Generated visual difference file: " +  visDiffFile);
             invokeMismatchFailure(callback, baseFile);
-
         }
     });
 }
