@@ -39,7 +39,8 @@
     "webdriverjs": "0.7.8",
     "phantomjs": "1.9.1-0",
     "win-spawn": "2.0.0",
-    "colorlog": "~0.1.1"
+    "colorlog": "~0.1.1",
+    "gm": "1.13.3"
   },
   "devDependencies": {
     "jasmine-node": "1.10.2",
@@ -49,5 +50,6 @@
     "grunt-shell": "~0.3.1",
     "grunt-cli": "~0.1.9",
     "grunt-contrib-jshint": "~0.6.3"
+
   }
 }
