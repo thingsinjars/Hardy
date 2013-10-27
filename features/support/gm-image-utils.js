@@ -2,8 +2,20 @@
  * Image utility functions that rely on GraphicsMagick
  */
 var spawn = require('child_process').spawn;
+var exec = require('child_process').exec;
 var environment = { stdio: 'inherit' };
 var gm = require('gm');
+
+/**
+ * Determine if GraphicsMagick is available.
+ * @param callback Invoked with true if available; false otherwise.
+ */
+exports.isAvailable = function(callback) {
+   exec('gm version', function(error, stdout, stderr) {
+       callback( error === null );
+   });
+}
+
 
 /**
  * Crop the image using GraphicsMagick

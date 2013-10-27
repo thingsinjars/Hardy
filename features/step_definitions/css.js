@@ -3,8 +3,6 @@ module.exports = function() {
     this.World = require('../support/world.js');
     var imageTest = require('../support/imagetest'),
         utils = require('../support/css-utils'),
-        ghostUtils = require('../support/ghost-image-utils'),
-        gmUtils = require('../support/gm-image-utils'),
         assert = require('assert'),
         selectors = require('../support/selectors.js'),
         logger = require("../support/logger")(),
@@ -12,6 +10,14 @@ module.exports = function() {
     var shouldHavePropertyOfValue, shouldHavePropertyOfValueOrValue,
         shouldHaveOffsetPropertyOfValue, shouldHavePropertyOfComparatorThanValue,
         shouldLookTheSameAsBefore;
+
+    // Use gm-image-utils if GraphicsMagick is available), as its 7-10X faster.
+    // Otherwise, fallback to ghost-image-utils.
+    var imageUtils;
+    var gmUtils = require('../support/gm-image-utils');
+    gmUtils.isAvailable( function(res) {
+        imageUtils = res ? gmUtils : require('../support/ghost-image-utils');
+    });
 
     /* "<Then> the <element> should have <property> of <value>" */
     // Map the given name to the selector then find that element in the page
@@ -190,9 +196,9 @@ module.exports = function() {
             processRoot: process.env.BINARYPATH,
             webdriver: this,
             fileNameGetter: config('fileNameGetter') || false,
-            cropImage:gmUtils.cropImage,
-            compareImages:gmUtils.compareImages,
-            createImageDiff:gmUtils.createImageDiff
+            cropImage:imageUtils.cropImage,
+            compareImages:imageUtils.compareImages,
+            createImageDiff:imageUtils.createImageDiff
         });
         imageTest.screenshot(elementSelector, function(err, result) {
             if (err) {
