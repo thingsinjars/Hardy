@@ -5,13 +5,11 @@
 // Reworked here to work with any Selenium-powered browser
 
 var fs = require('fs');
-var _tolerance = 64;
 var _root = '.';
 var _count = 0;
 var webdriver;
-var exitStatus;
 var platform = require('os').platform();
-var _processRoot = process.cwd();
+var _cropImage, _compareImages;
 
 exports.screenshot = screenshot;
 exports.compare = compare;
@@ -20,11 +18,12 @@ exports.init = init;
 function init(options) {
     webdriver = options.webdriver || {};
     _root = options.screenshotRoot || _root;
-    _processRoot = options.processRoot || _processRoot;
     _fileNameGetter = options.fileNameGetter || _fileNameGetter;
+    _cropImage = options.cropImage;
+    _compareImages = options.compareImages;
 }
 
-function _fileNameGetter(_root, selector) {
+function _fileNameGetter(_root, selector, webdriver) {
     // Possibly use selector here for filename
     selector = selector.replace(/[\#\.\s:>]/g,'');
 
@@ -39,7 +38,7 @@ function _fileNameGetter(_root, selector) {
 
 // If we're grabbing the whole page, just use webdriver default
 function screenshot(selector, callback) {
-    var filename = _fileNameGetter(_root, selector);
+    var filename = _fileNameGetter(_root, selector, webdriver);
     if(typeof selector === "function") {
         // No selector passed, capture the whole page
         // selector is actually the callback
@@ -78,18 +77,14 @@ function captureSelector(filename, selector, callback) {
                         return callback("Error saving screenshot to temp file: " + tempFile, tempFile);
                     }
 
-                    // Spawn a separate process to crop the image to the size and position of the element
-                    // console.log(_processRoot + '/lib/GhostKnife/ghostknife', [tempFile, where.x, where.y, size.width, size.height, 3000, 10000, filename]);
-                    var spawn = require('child_process').spawn,
-                    imgcrp = spawn(_processRoot + '/lib/GhostKnife/ghostknife', [tempFile, where.x, where.y, size.width, size.height, 3000, 10000, filename]);
-                    imgcrp.on('exit', function(code) {
-                        if (code === 0) {
+                    _cropImage(tempFile, filename, { x:where.x, y:where.y, width:size.width, height:size.height }, function(res) {
+                        if (res instanceof Error) {
+                            callback(res);
+                        }
+                        else {
                             callback(null, {status: /\.diff\./.test(filename)?'success':'firstrun', value: filename});
-                        } else {
-                            callback(new Error("Error cropping image via ghostknife: " + code));
                         }
                     });
-
                 });
             });
         });
@@ -104,14 +99,13 @@ function compare(filename, callback) {
     if (!fs.existsSync(baseFile)) {
         return callback(new Error(baseFile + " does not exist"));
     } else {
-        // But instead, we have to spawn the global imagediff because the node one is acting weird
-        var spawn = require('child_process').spawn,
-            imgdf = spawn(_processRoot + '/lib/GhostDiff/ghostdiff', [filename, baseFile]);
-        imgdf.on('exit', function(code) {
-            if (code === 0) {
+
+        _compareImages(baseFile, filename, function(res) {
+            if (res) {
                 callback();
-            } else {
-                callback.fail(new Error("Images don't match: " + filename));
+            }
+            else {
+                callback.fail( new Error("Latest image does not match baseline: " + baseFile) );
             }
         });
     }
