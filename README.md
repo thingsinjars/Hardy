@@ -35,6 +35,10 @@ To run tests against Internet Explorer, you will need [InternetExplorerDriver](h
 
 To run Selenium at all, you'll need [Java](http://java.com/en/download/index.jsp).
 
+Finally, for (significantly) faster visual image compares, install GraphicsMagick.  On OSX:
+
+    brew install graphicsmagick
+
 Getting started
 ---
 
