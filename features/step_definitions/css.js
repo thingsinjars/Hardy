@@ -15,7 +15,7 @@ module.exports = function() {
     // Otherwise, fallback to ghost-image-utils.
     var imageUtils;
     var gmUtils = require('../support/gm-image-utils');
-    gmUtils.isAvailable( function(res) {
+    gmUtils.isAvailable(function(res) {
         imageUtils = res ? gmUtils : require('../support/ghost-image-utils');
     });
 
@@ -196,9 +196,9 @@ module.exports = function() {
             processRoot: process.env.BINARYPATH,
             webdriver: this,
             fileNameGetter: config('fileNameGetter') || false,
-            cropImage:imageUtils.cropImage,
-            compareImages:imageUtils.compareImages,
-            createImageDiff:imageUtils.createImageDiff
+            cropImage: imageUtils.cropImage,
+            compareImages: imageUtils.compareImages,
+            createImageDiff: imageUtils.createImageDiff
         });
         imageTest.screenshot(elementSelector, function(err, result) {
             if (err) {

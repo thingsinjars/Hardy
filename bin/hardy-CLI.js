@@ -171,7 +171,7 @@ function hardyCLI() {
 
             testFolder = process.argv[process.argv.length - 1];
             testPath = path.resolve(testFolder);
-            
+
             if (PROPERTIES.configFile && fs.existsSync(testPath + "/" + PROPERTIES.configFile)) {
                 configFile = testPath + "/" + PROPERTIES.configFile;
             }
@@ -295,8 +295,9 @@ function hardyCLI() {
     }
 
     function cleanDirectory(dirPath) {
+        var files;
         try {
-            var files = fs.readdirSync(dirPath);
+            files = fs.readdirSync(dirPath);
         } catch (e) {
             return;
         }

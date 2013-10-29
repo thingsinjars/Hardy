@@ -11,6 +11,7 @@ module.exports = (function() {
 
 
     // Returns the JS property version of the supplied CSS property
+
     function camelize(str) {
         return str.replace(/[\s\-](\w)/g, function(str, letter) {
             return letter.toUpperCase();
@@ -143,22 +144,22 @@ module.exports = (function() {
 
     var toRgba = function(color) {
         if (isRgb(color)) {
-            return color.replace(")",",1)").replace('rgb(', 'rgba(').replace(/\s/g,'');
+            return color.replace(")", ",1)").replace('rgb(', 'rgba(').replace(/\s/g, '');
         }
         if (isRgba(color)) {
-            return color.replace(/\s/g,'');
+            return color.replace(/\s/g, '');
         }
         if (isHsla(color)) {
-            return hslaToRgba(color).replace(/\s/g,'');
+            return hslaToRgba(color).replace(/\s/g, '');
         }
         if (isHex(color)) {
-            return hexToRgba(color, 100).replace(/\s/g,'');
+            return hexToRgba(color, 100).replace(/\s/g, '');
         }
 
     };
 
     var normalizeString = function(value) {
-        return value.replace(/\s/g,'');
+        return value.replace(/\s/g, '');
     };
 
     return {

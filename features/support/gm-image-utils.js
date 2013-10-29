@@ -3,7 +3,9 @@
  */
 var spawn = require('child_process').spawn;
 var exec = require('child_process').exec;
-var environment = { stdio: 'inherit' };
+var environment = {
+    stdio: 'inherit'
+};
 var gm = require('gm');
 
 /**
@@ -11,10 +13,10 @@ var gm = require('gm');
  * @param callback Invoked with true if available; false otherwise.
  */
 exports.isAvailable = function(callback) {
-   exec('gm version', function(error, stdout, stderr) {
-       callback( error === null );
-   });
-}
+    exec('gm version', function(error, stdout, stderr) {
+        callback(error === null);
+    });
+};
 
 
 /**
@@ -24,20 +26,18 @@ exports.isAvailable = function(callback) {
  * @param cropRect The cropping area with x,y,width,height
  * @param callback Invoked with no args if successful. or error.
  */
-exports.cropImage = function(sourceImagePath, targetImagePath, cropRect, callback)   {
+exports.cropImage = function(sourceImagePath, targetImagePath, cropRect, callback) {
 
     gm(sourceImagePath)
         .crop(cropRect.width, cropRect.height, cropRect.x, cropRect.y)
         .write(targetImagePath, function(err) {
             if (err) {
                 callback(new Error("Error cropping image via GraphicsMagick: " + err));
-            }
-            else
-            {
+            } else {
                 callback();
             }
         });
-}
+};
 
 /**
  * Visually compare two images using GraphicsMagick
@@ -47,17 +47,16 @@ exports.cropImage = function(sourceImagePath, targetImagePath, cropRect, callbac
  */
 exports.compareImages = function(imagePath1, imagePath2, callback) {
 
-    var tolerance = 0.0;  // this means exactly equal
-    gm.compare(imagePath1, imagePath2, tolerance, function (err, isEqual, equality, raw) {
+    var tolerance = 0.0; // this means exactly equal
+    gm.compare(imagePath1, imagePath2, tolerance, function(err, isEqual, equality, raw) {
         if (err) {
             callback(err);
-        }
-        else {
+        } else {
             callback(isEqual);
         }
     });
 
-}
+};
 
 
 /**
@@ -69,13 +68,14 @@ exports.compareImages = function(imagePath1, imagePath2, callback) {
  */
 exports.createImageDiff = function(imagePath1, imagePath2, targetImagePath, callback) {
 
-    gm.compare( imagePath1, imagePath2, { file: targetImagePath }, function(err, isEqual, equality, raw) {
+    gm.compare(imagePath1, imagePath2, {
+        file: targetImagePath
+    }, function(err, isEqual, equality, raw) {
 
         if (err) {
             callback(err);
-        }
-        else {
+        } else {
             callback();
         }
     });
-}
+};

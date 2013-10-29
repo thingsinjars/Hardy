@@ -46,7 +46,7 @@ function getLogger(logLevel) {
 }
 
 module.exports = function(logLevel) {
-	if(logLevel) {
+	if (logLevel) {
 		getLogger(logLevel);
 	}
 	return Logger;

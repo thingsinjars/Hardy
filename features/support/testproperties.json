@@ -1,13 +1,13 @@
 {
-    "logLevel": "info",
+	"logLevel": "info",
 
-    "host": "localhost",
+	"host": "localhost",
 
-    "browser": "firefox",
+	"browser": "firefox",
 
-    "binaryPath": ".",
+	"binaryPath": ".",
 
-    "testPath": ".",
+	"testPath": ".",
 
-    "configFile" : ""
+	"configFile": ""
 }

@@ -2,7 +2,9 @@
  * Image utility functions that rely on GhostKnife and GhostDiff
  */
 var spawn = require('child_process').spawn;
-var environment = { stdio: 'inherit' };
+var environment = {
+    stdio: 'inherit'
+};
 
 /**
  * Crop the image using Ghostknife.
@@ -11,23 +13,20 @@ var environment = { stdio: 'inherit' };
  * @param cropRect The cropping area with x,y,width,height
  * @param callback Invoked with no args upon successful, or an error.
  */
-exports.cropImage = function(sourceImagePath, targetImagePath, cropRect, callback)   {
+exports.cropImage = function(sourceImagePath, targetImagePath, cropRect, callback) {
 
     //console.log("cropImage with", binaryPath + '/lib/GhostKnife/ghostknife', [sourceImagePath, cropRect.x, cropRect.y, cropRect.width, cropRect.height, 3000, 10000, targetImagePath]);
     var binaryPath = process.env.BINARYPATH;
-    var imgcrp = spawn(binaryPath + '/lib/GhostKnife/ghostknife',
-        [sourceImagePath, cropRect.x, cropRect.y, cropRect.width, cropRect.height, 3000, 10000, targetImagePath],
+    var imgcrp = spawn(binaryPath + '/lib/GhostKnife/ghostknife', [sourceImagePath, cropRect.x, cropRect.y, cropRect.width, cropRect.height, 3000, 10000, targetImagePath],
         environment);
     imgcrp.on('exit', function(code) {
         if (code === 0) {
             callback();
-        }
-        else
-        {
+        } else {
             callback(new Error("Error cropping image via ghostknife: " + code));
         }
     });
-}
+};
 
 /**
  * Visually compare two images using GhostDiff
@@ -41,6 +40,6 @@ exports.compareImages = function(imagePath1, imagePath2, callback) {
     var binaryPath = process.env.BINARYPATH;
     var imgdf = spawn(binaryPath + '/lib/GhostDiff/ghostdiff', [imagePath1, imagePath2]);
     imgdf.on('exit', function(code) {
-        callback( code === 0 )
+        callback(code === 0);
     });
-}
+};
