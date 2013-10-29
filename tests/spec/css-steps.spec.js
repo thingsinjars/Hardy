@@ -9,13 +9,22 @@ var mockery = require('mockery');
 
 describe('CSS Steps: ', function() {
 
-	var worldMock, imageTestMock, utilsMock, assertMock, selectorsMock, cucumberMock, cucumberThens, cucumberGivens, callbackMock;
+	var worldMock, imageTestMock, utilsMock, imageUtilsMock, assertMock, selectorsMock, cucumberMock, cucumberThens, cucumberGivens, callbackMock;
 
 	beforeEach(function() {
 
 		worldMock = {}; // Might not need this
+		colorlogMock = {};
+		loggerMock = jasmine.createSpy('logger').andReturn(colorlogMock);
+		configMock = jasmine.createSpy('config loader');
 		imageTestMock = {
 			init: jasmine.createSpy('initialising imageTest')
+		};
+		gmImageUtilsMock = {
+			isAvailable: jasmine.createSpy('is GraphicsMagick available').andReturn(false)
+		};
+		ghostImageUtilsMock = {
+			isAvailable: jasmine.createSpy('initialising imageTest')
 		};
 		utilsMock = {
 			isColor: jasmine.createSpy('initialising imageTest').andReturn(true),
@@ -71,10 +80,15 @@ describe('CSS Steps: ', function() {
 		mockery.registerAllowable(basedir + 'features/step_definitions/css.js');
 
 		mockery.registerMock('../support/world.js', worldMock);
+		mockery.registerMock('../support/gm-image-utils', gmImageUtilsMock);
+		mockery.registerMock('../support/ghost-image-utils', ghostImageUtilsMock);
 		mockery.registerMock('../support/imagetest', imageTestMock);
 		mockery.registerMock('../support/css-utils', utilsMock);
 		mockery.registerMock('assert', assertMock);
 		mockery.registerMock('../support/selectors.js', selectorsMock);
+		mockery.registerMock('../support/config.js', configMock);
+		mockery.registerMock('../support/logger', loggerMock);
+		mockery.registerMock('colorlog', colorlogMock);
 
 		mockery.enable();
 		CSSSteps = require(basedir + 'features/step_definitions/css.js');
@@ -97,6 +111,7 @@ describe('CSS Steps: ', function() {
 			expect(cucumberMock.Then).toHaveBeenCalledWith(/^"([^"]*)" should look the same as before$/, jasmine.any(Function));
 		});
 	});
+
 	describe('Test step', function() {
 		xit('"should set window size"', function() { // moved this step to generics. must create test file for them
 			cucumberGivens['/^the window size is "([^"]*)" by "([^"]*)"$/'].apply(cucumberMock);
@@ -160,7 +175,6 @@ describe('CSS Steps: ', function() {
 				expect(callbackMock.fail).toHaveBeenCalled();
 			});
 		});
-
 	});
 
 });

@@ -9,7 +9,7 @@ var mockery = require('mockery');
 
 describe('HardyCLI: ', function() {
 
-	var fsMock, httpMock, child_processMock;
+	var fsMock, httpMock, child_processMock, osMock;
 
 	(function() {
 		console.log = jasmine.createSpy('Console log');
@@ -38,6 +38,11 @@ describe('HardyCLI: ', function() {
 		child_processMock = {
 			spawn: jasmine.createSpy('child_process.spawn').andReturn({pid: '999', on: jasmine.createSpy('registering on process exit')})
 		};
+
+		osMock = {
+			type: jasmine.createSpy('checking OS type').andReturn('DummyOS')
+		};
+		mockery.registerMock('os', osMock);
 
 	});
 

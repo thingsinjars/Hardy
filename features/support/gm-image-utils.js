@@ -1,7 +1,6 @@
 /**
  * Image utility functions that rely on GraphicsMagick
  */
-var spawn = require('child_process').spawn;
 var exec = require('child_process').exec;
 var environment = {
     stdio: 'inherit'
