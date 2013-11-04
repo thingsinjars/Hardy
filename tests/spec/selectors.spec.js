@@ -1,51 +1,42 @@
 /* Selectors map Tests
  */
 
-var SelectorMapping, basedir;
+var SelectorMapping,
+  beforeTest = require('./beforetests'),
+  moduleUnderTest = '../../features/support/selectors.js',
+  mockery = require('mockery');
 
-basedir = '../../';
-
-var mockery = require('mockery');
+var mocks = {
+  'path': {
+    resolve: function() {
+      return 'MOCKPATH';
+    }
+  },
+  'MOCKPATH/selectors.js': {
+    "test name": "mocked > selector",
+    "other name": ".another .mocked .selector"
+  }
+}
 
 describe('Selectors map: ', function() {
 
-  var pathMock, processMock, selectorMap;
-
   console.log = jasmine.createSpy('Console log');
 
-  beforeEach(function() {
-    pathMock = {
-      resolve: function() {
-        return 'MOCKPATH';
-      }
-    };
-    process.env.TESTPATH = '';
-    selectorMap = {
-      "test name": "mocked > selector",
-      "other name": ".another .mocked .selector"
-    };
-    mockery.registerMock('path', pathMock);
-    mockery.registerMock('MOCKPATH/selectors.js', selectorMap);
-    mockery.registerAllowable(basedir + 'features/support/selectors.js');
-    mockery.enable({
-      useCleanCache: true
-    });
-  });
+  beforeTest(mockery, mocks, moduleUnderTest);
 
-  afterEach(function() {
-    mockery.disable();
-    mockery.deregisterAll();
+  beforeEach(function() {
+    process.env.TESTPATH = '';
   });
 
   describe('mapping names to selectors', function() {
 
     it('returns the selector associated with the name', function() {
-      SelectorMapping = require(basedir + 'features/support/selectors.js');
+      SelectorMapping = require(moduleUnderTest);
       expect(SelectorMapping('test name', 'TESTPATH')).toEqual('mocked > selector');
     });
 
     it('returns the original name if it is not in the map', function() {
-      SelectorMapping = require(basedir + 'features/support/selectors.js');
+      SelectorMapping = require(moduleUnderTest);
       expect(SelectorMapping('unmapped name', 'TESTPATH')).toEqual('unmapped name');
     });
   });
