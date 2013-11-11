@@ -196,6 +196,7 @@ module.exports = function() {
             processRoot: process.env.BINARYPATH,
             webdriver: this,
             fileNameGetter: config('fileNameGetter') || false,
+            failOnImageDiff: config('failOnImageDiff') === undefined ? true : config('failOnImageDiff'),
             cropImage: imageUtils.cropImage,
             compareImages: imageUtils.compareImages,
             createImageDiff: imageUtils.createImageDiff
