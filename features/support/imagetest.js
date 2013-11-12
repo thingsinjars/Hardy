@@ -10,7 +10,7 @@ var _count = 0;
 var webdriver;
 var platform = require('os').platform();
 var logger = require("./logger")();
-var _cropImage, _compareImages, _createImageDiff;
+var _cropImage, _compareImages, _createImageDiff, _failOnImageDiff;
 
 exports.screenshot = screenshot;
 exports.compare = compare;
@@ -20,6 +20,7 @@ function init(options) {
     webdriver = options.webdriver || {};
     _root = options.screenshotRoot || _root;
     _fileNameGetter = options.fileNameGetter || _fileNameGetter;
+    _failOnImageDiff = options.failOnImageDiff;
     _cropImage = options.cropImage;
     _compareImages = options.compareImages;
     _createImageDiff = options.createImageDiff;
@@ -117,7 +118,7 @@ function compare(filename, callback) {
                 if (_createImageDiff) { // create a visual difference file and then fail
                     generateImageDiff(baseFile, filename, callback);
                 } else {
-                    invokeMismatchFailure(callback, baseFile);
+                    invokeMismatchFailure(callback, filename);
 
                 }
             }
@@ -135,14 +136,19 @@ function generateImageDiff(baseFile, newFile, callback) {
         if (err) {
             callback.fail("Error creating visual diff file: " + err);
         } else {
-            logger.warning("\tImages do not match. Generated visual difference file: " + visDiffFile);
-            invokeMismatchFailure(callback, baseFile);
+            invokeMismatchFailure(callback, visDiffFile);
         }
     });
 }
 
-function invokeMismatchFailure(callback, baseFile) {
-    callback.fail(new Error("Generated image does not match baseline: " + baseFile));
+function invokeMismatchFailure(callback, generatedImageFile) {
+    var message = "Generated image does not match baseline: " + generatedImageFile;
+        if (_failOnImageDiff) {
+            callback.fail( new Error(message) );
+        } else {
+            // just warn in this case
+            logger.warning(message);
+            callback();
+        }
 }
-
 module.exports = exports;
