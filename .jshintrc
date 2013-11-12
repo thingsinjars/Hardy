@@ -1,0 +1,32 @@
+{
+    "globals": {
+        "jasmine": true,
+        "spyOn": true,
+        "it": true,
+        "console": false,
+        "describe": true,
+        "expect": true,
+        "beforeEach": true,
+        "afterEach": true,
+        "waits": true,
+        "waitsFor": true,
+        "runs": true
+    },
+
+    "node" : true,
+    "boss" : false,
+    "curly": false,
+    "debug": false,
+    "devel": false,
+    "eqeqeq": true,
+    "evil": true,
+    "forin": true,
+    "globalstrict": true,
+    "immed": true,
+    "laxbreak": false,
+    "noempty": true,
+    "undef": true,
+    "sub": false,
+    "strict": true,
+    "white": false
+}

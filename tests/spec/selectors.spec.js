@@ -1,49 +1,44 @@
 /* Selectors map Tests
  */
 
-var SelectorMapping, basedir;
+var SelectorMapping,
+  beforeTest = require('./beforetests'),
+  moduleUnderTest = '../../features/support/selectors.js',
+  mockery = require('mockery');
 
-basedir = '../../';
-
-var mockery = require('mockery');
+var mocks = {
+  'path': {
+    resolve: function() {
+      return 'MOCKPATH';
+    }
+  },
+  'MOCKPATH/selectors.js': {
+    "test name": "mocked > selector",
+    "other name": ".another .mocked .selector"
+  }
+};
 
 describe('Selectors map: ', function() {
 
-	var pathMock, processMock, selectorMap;
+  console.log = jasmine.createSpy('Console log');
 
-	console.log = jasmine.createSpy('Console log');
+  beforeTest(mockery, mocks, moduleUnderTest);
 
-	beforeEach(function() {
-		pathMock = {
-			resolve: function() {return 'MOCKPATH';}
-		};
-		process.env.TESTPATH = '';
-		selectorMap = {
-			"test name": "mocked > selector",
-			"other name": ".another .mocked .selector"
-		};
-		mockery.registerMock('path', pathMock);
-		mockery.registerMock('MOCKPATH/selectors.js', selectorMap);
-		mockery.registerAllowable(basedir + 'features/support/selectors.js');
-		mockery.enable({useCleanCache: true });
-	});
+  beforeEach(function() {
+    process.env.TESTPATH = '';
+  });
 
-	afterEach(function() {
-		mockery.disable();
-		mockery.deregisterAll();
-	});
+  describe('mapping names to selectors', function() {
 
-	describe('mapping names to selectors', function() {
+    it('returns the selector associated with the name', function() {
+      SelectorMapping = require(moduleUnderTest);
+      expect(SelectorMapping('test name', 'TESTPATH')).toEqual('mocked > selector');
+    });
 
-		it('returns the selector associated with the name', function() {
-			SelectorMapping = require(basedir + 'features/support/selectors.js');
-			expect(SelectorMapping('test name', 'TESTPATH')).toEqual('mocked > selector');
-		});
-
-		it('returns the original name if it is not in the map', function() {
-			SelectorMapping = require(basedir + 'features/support/selectors.js');
-			expect(SelectorMapping('unmapped name', 'TESTPATH')).toEqual('unmapped name');
-		});
-	});
+    it('returns the original name if it is not in the map', function() {
+      SelectorMapping = require(moduleUnderTest);
+      expect(SelectorMapping('unmapped name', 'TESTPATH')).toEqual('unmapped name');
+    });
+  });
 
 });

@@ -34,7 +34,10 @@ module.exports = function(grunt) {
       }
     },
     jshint: {
-      all: ['Gruntfile.js', 'features/**/*.js', 'bin/**/*.js', 'tests/spec/*.js']
+      all: ['Gruntfile.js', 'features/**/*.js', 'bin/**/*.js', 'tests/spec/*.js'],
+      options: {
+        jshintrc: '.jshintrc'
+      }
     }
   });
 
