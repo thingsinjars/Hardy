@@ -1,6 +1,6 @@
 {
   "name": "hardy",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A collection of steps to run CSS tests using Cucumber and Selenium",
   "homepage": "http://hardy.io/",
   "bugs": {
@@ -50,6 +50,5 @@
     "grunt-shell": "~0.3.1",
     "grunt-cli": "~0.1.9",
     "grunt-contrib-jshint": "~0.6.3"
-
   }
 }
