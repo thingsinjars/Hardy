@@ -16,7 +16,7 @@ var mocks = {
     "test name": "mocked > selector",
     "other name": ".another .mocked .selector"
   }
-}
+};
 
 describe('Selectors map: ', function() {
 

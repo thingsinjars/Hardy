@@ -45,6 +45,6 @@ function preTest(mockery, mocks, moduleUnderTest, writingMode) {
     mockery.disable();
     mockery.deregisterAll();
   });
-};
+}
 
 module.exports = preTest;
