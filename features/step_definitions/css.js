@@ -134,23 +134,48 @@ module.exports = function() {
 
     value = parseFloat(value, 10);
 
-    // Special case for width and height which, if unset, default to auto
-    // A few other things do as well but these are the most common.
-    if (property === 'width' || property === 'height') {
-      this.getSize(elementSelector, function(err, measuredValue) {
-        if (err) {
-          callback.fail(err);
-        }
-        measuredValue = measuredValue[property];
-        // compare(value, measuredValue, message, callback);
-        measuredValue = parseFloat(measuredValue, 10);
-        message += ' (' + measuredValue + ')';
-        if (comparator === 'less') {
-          try {
-            assert.ok(measuredValue < value, message);
-          } catch (e) {
-            return callback.fail(e.message);
-          }
+            callback();
+        });
+    };
+    this.Then(/^"([^"]*)" should have offset "([^"]*)" of "([^"]*)"$/, shouldHaveOffsetPropertyOfValue);
+
+    //    "<Then> the <element> should have <property> of <comparator> than <value>"
+    // Map the given name to the selector then find that element in the page
+    // The measured value of the property should be more than or less than the one provided
+    shouldHavePropertyOfComparatorThanValue = function(elementName, property, comparator, value, callback) {
+        var elementSelector = selectors(elementName);
+
+
+        var message = elementName + ' should have ' + property + ' of ' + comparator + ' than ' + value;
+
+        value = parseFloat(value, 10);
+
+        // Special case for width and height which, if unset, default to auto
+        // A few other things do as well but these are the most common.
+        if (property === 'width' || property === 'height') {
+            this.getElementSize(elementSelector, function(err, measuredValue) {
+                if (err) {
+                    callback.fail(err);
+                }
+                measuredValue = measuredValue[property];
+                // compare(value, measuredValue, message, callback);
+                measuredValue = parseFloat(measuredValue, 10);
+                message += ' (' + measuredValue + ')';
+                if (comparator === 'less') {
+                    try {
+                        assert.ok(measuredValue < value, message);
+                    } catch (e) {
+                        return callback.fail(e.message);
+                    }
+                } else {
+                    try {
+                        assert.ok(measuredValue > value, message);
+                    } catch (e) {
+                        return callback.fail(e.message);
+                    }
+                }
+                callback();
+            });
         } else {
           try {
             assert.ok(measuredValue > value, message);

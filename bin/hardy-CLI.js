@@ -89,11 +89,11 @@ function hardyCLI() {
     function controlNotRunningSelenium() {
         if (PROPERTIES.seleniumAction === 'start') {
             if (PROPERTIES.logLevel === 'debug') {
-                console.log('java', ['-jar', hardyPath + 'lib/selenium-server-standalone-2.32.0.jar'], {
+                console.log('java', ['-jar', hardyPath + 'lib/selenium-server-standalone-2.35.0.jar'], {
                     detached: true
                 });
             }
-            var selenium = spawn('java', ['-jar', hardyPath + 'lib/selenium-server-standalone-2.32.0.jar'], {
+            var selenium = spawn('java', ['-jar', hardyPath + 'lib/selenium-server-standalone-2.35.0.jar'], {
                 detached: true
             });
             fs.writeFile(lockFile, selenium.pid, function(err) {
@@ -265,6 +265,8 @@ function hardyCLI() {
             if (usage) {
                 console.log('Usage:');
                 console.log('hardy --browser=chrome,phantomjs,ie features/');
+                console.log('      --reportFormat=[pretty|progress|summary|json]');
+                console.log('      --logLevel=[silent|error|debug]');
                 console.log('hardy selenium start');
                 console.log('hardy selenium stop');
                 console.log('hardy init');
@@ -284,9 +286,9 @@ function hardyCLI() {
             currentRun++;
             if (code === 0) {
                 // Add Browser name here
-                console.log(browser + ' success');
+                //console.log(browser + ' success');
             } else {
-                console.log(browser + ' fail');
+                //console.log(browser + ' fail');
             }
             if (currentRun == numberOfRuns) {
                 process.exit(exitCode);

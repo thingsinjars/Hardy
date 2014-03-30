@@ -66,21 +66,18 @@ function captureSelector(filename, selector, callback) {
                 return callback("Error getting location for selector: \"" + selector + "\" : " + err.orgStatusMessage, result);
             }
             // Third, find out how big the element is
-            webdriver.getSize(selector, function(err, size) {
+            webdriver.getElementSize(selector, function(err, size) {
                 if (err) {
                     return callback("Error getting size for selector: \"" + selector + "\" : " + err.orgStatusMessage, result);
                 }
-
                 // Fourth, save the fullsize image
                 var buffer = new Buffer(result.value, 'base64'),
                     tempFile = _root + '/tmp/' + process.pid + '.png';
-
                 fs.writeFile(tempFile, buffer, 'base64', function(err) {
-
                     if (err) {
                         return callback("Error saving screenshot to temp file: " + tempFile, tempFile);
                     }
-
+console.log('Successfully saved screenshot to: '+tempFile);
                     _cropImage(tempFile, filename, {
                         x: where.x,
                         y: where.y,
