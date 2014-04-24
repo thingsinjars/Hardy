@@ -3,6 +3,7 @@ module.exports = function() {
   this.World = require('../support/world.js');
   var imageTest = require('../support/imagetest'),
     utils = require('../support/css-utils'),
+    color = require('onecolor'),
     assert = require('assert'),
     selectors = require('../support/selectors.js'),
     logger = require("../support/logger")(),
@@ -24,12 +25,12 @@ module.exports = function() {
   // The measured value of the property should be the one we expect
   shouldHavePropertyOfValue = function(elementName, property, value, callback) {
     var elementSelector = selectors(elementName);
-    var message = '"' + elementName + '" should have ' + property + ' of ' + value;
-
-    // Ensure we're comparing the same units
-    if (utils.isColor(value)) {
-      value = utils.toRgba(value);
-    }
+    //var message = '"' + elementName + '" should have ' + property + ' of ' + value;
+    var messageTpl = '"{0}" should have {1} of {2}, measured {3}';
+    var message;
+    var valueStr = value;
+    var measuredValueStr;
+    var isColor = !!color(value);
 
     this.getCssProperty(elementSelector, property, function(err, measuredValue) {
       if (err) {
@@ -48,12 +49,33 @@ module.exports = function() {
         value = value.replace(/"/g, "'");
       }
 
-      message += ", measured: " + measuredValue;
+      measuredValueStr = measuredValue;
 
-      measuredValue = utils.normalizeString(measuredValue);
+      if (isColor) {
+        value = color(value);
+        measuredValue = color(measuredValue);
+
+        // Help the user by both showing the raw values and a comparable rgba format
+        // This is helpful to compare colors from different color spaces
+        // Fx: color('hotpink').equals(color('hsva(330, 58, 100, 1)'), 0.001) // true
+        valueStr += ' (' + value.cssa() + ')';
+        measuredValueStr += ' (' + measuredValue.cssa() + ')';
+      } else {
+        measuredValue = utils.normalizeString(measuredValue);
+      }
+
+      message = messageTpl
+        .replace('{0}', elementName)
+        .replace('{1}', property)
+        .replace('{2}', valueStr)
+        .replace('{3}', measuredValueStr);
 
       try {
-        assert.equal(measuredValue, value, message);
+        if (isColor) {
+            assert.equal(value.equals(measuredValue, 0.001), true, message);
+        } else {
+            assert.equal(measuredValue, value, message);
+        }
       } catch (e) {
         return callback.fail(e.message);
       }
