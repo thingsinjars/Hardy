@@ -35,7 +35,7 @@
     "url": "https://github.com/thingsinjars/Hardy.git"
   },
   "dependencies": {
-    "onecolor": "^2.4.0",
+    "onecolor": "~2.4.0",
     "cucumber": "0.3.0",
     "webdriverjs": "0.7.8",
     "phantomjs": "1.9.1-0",
