@@ -35,7 +35,7 @@ module.exports = function(callback) {
 
         logger.info('Loading browser ' + PROPERTIES.browser);
 
-        var browser = require("webdriverjs").remote({
+        var browser = require("webdriverio").remote({
             logLevel: PROPERTIES.logLevel === 'info' ? 'silent' : (PROPERTIES.logLevel || 'silent'),
             host: PROPERTIES.host,
             desiredCapabilities: {
@@ -44,7 +44,7 @@ module.exports = function(callback) {
         });
 
         // Implement a command to ask Selenium to resize the browser window
-        // Remove when WebDriverJS supports this.
+        // Remove when WebDriverIO supports this.
         browser.addCommand("setWindowSize", function(width, height, callback) {
             this.windowHandleSize({
                 width: width || 1024,
