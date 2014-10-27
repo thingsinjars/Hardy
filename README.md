@@ -8,9 +8,9 @@ _This is almost entirely working but not 100%. If you spot a problem, please [fi
 
 [Hardy](http://hardy.io/) is a collection of CSS testing steps and a boilerplate testing setup to get you up-and-running with automated CSS testing as quickly as possible. Tests are written in Cucumber and use Selenium. Hardy runs on Node.js and therefore all the example CSS test helpers are written in JS. The functionality behind them can easily be reused in any test setup, whether your tests are written in Java, Ruby or anything else.
 
-This is a refactor of the original GhostStory project to run against Selenium using WebDriverJS. The original collection of CSS testing steps were written specifically for CasperJS and PhantomJS but now that PhantomJS supports the WebDriver protocol, we're now going via Selenium so that tests can be run against any browser.
+This is a refactor of the original GhostStory project to run against Selenium using WebDriverIO. The original collection of CSS testing steps were written specifically for CasperJS and PhantomJS but now that PhantomJS supports the WebDriver protocol, we're now going via Selenium so that tests can be run against any browser.
 
-The structure of this project and the WebDriverJS bindings are from [WebDriverJS](https://github.com/camme/webdriverjs).
+The structure of this project and the WebDriverIO bindings are from [WebDriverIO](https://github.com/webdriverio/webdriverio).
 
 ![image](https://raw.github.com/thingsinjars/hardy.io/94b2744df96f17020ba17bfcf279ba52907a4abf/assets/small-logo.png)
 
@@ -75,7 +75,7 @@ To verify Hardy is working as it should, unit and acceptance tests are available
 
     # Or, to run both:
     grunt test
-    
+
 The tests are automatically run on every commit to the main repo. Currently building on Travis CI:
 
 [![Build Status](https://travis-ci.org/thingsinjars/Hardy.png)](https://travis-ci.org/thingsinjars/Hardy)
@@ -95,7 +95,7 @@ Add the following to your .travis.yml:
       - node_modules/hardy/bin/hardy selenium start
       - {BUILD YOUR STATIC SITE HERE}
       - python -m SimpleHTTPServer&
-    
+
 And finally, add this to your package.json `scripts` object:
 
     "scripts": {

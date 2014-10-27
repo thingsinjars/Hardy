@@ -16,7 +16,7 @@ var mocks = {
 };
 
 
-describe('Generic WebDriverJS Steps: ', function() {
+describe('Generic WebDriverIO Steps: ', function() {
 
   beforeTest(mockery, mocks, moduleUnderTest);
 

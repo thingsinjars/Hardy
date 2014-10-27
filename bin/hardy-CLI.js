@@ -205,7 +205,7 @@ function hardyCLI() {
             optionsArray.push("--selectorsPath=" + testPath + "/selectors/");
         }
 
-        // Set the WebDriverJS logLevel if it has been supplied
+        // Set the WebDriverIO logLevel if it has been supplied
         if (PROPERTIES.logLevel) {
             optionsArray.push("--logLevel=" + PROPERTIES.logLevel);
         }
