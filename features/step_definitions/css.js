@@ -35,11 +35,16 @@ module.exports = function() {
     this.getCssProperty(elementSelector, property, function(err, measuredValue) {
       if (err) {
         if (typeof err === "object") {
-          err = err.type + ': ' + err.orgStatusMessage + ': "' + elementSelector + '"';
+          err = err.name + ': ' + err.message + ': "' + elementSelector + '"';
         }
         // console.error("Hardy :: Failed to get CSS property, ", err);
         // console.error("Hardy :: Could not find element '%s'", elementSelector);
         return callback.fail(err);
+      }
+
+      // Find a better solution for multiple matches. Later.
+      if (measuredValue instanceof Array) {
+        measuredValue = measuredValue[0].value;
       }
 
       // The browser may report fonts with quotes which don't make it through
@@ -72,9 +77,9 @@ module.exports = function() {
 
       try {
         if (isColor) {
-            assert.equal(value.equals(measuredValue, 0.001), true, message);
+          assert.equal(value.equals(measuredValue, 0.001), true, message);
         } else {
-            assert.equal(measuredValue, value, message);
+          assert.equal(measuredValue, value, message);
         }
       } catch (e) {
         return callback.fail(e.message);
@@ -159,11 +164,14 @@ module.exports = function() {
     // Special case for width and height which, if unset, default to auto
     // A few other things do as well but these are the most common.
     if (property === 'width' || property === 'height') {
-      this.getSize(elementSelector, function(err, measuredValue) {
+      this.getElementSize(elementSelector, function(err, measuredValue) {
         if (err) {
           callback.fail(err);
         }
-        measuredValue = measuredValue[property];
+        if (measuredValue instanceof Array) {
+          measuredValue = measuredValue[0].value;
+        }
+         measuredValue = measuredValue[property];
         // compare(value, measuredValue, message, callback);
         measuredValue = parseFloat(measuredValue, 10);
         message += ' (' + measuredValue + ')';
@@ -187,7 +195,12 @@ module.exports = function() {
         if (err) {
           callback.fail(err);
         }
+        if (measuredValue instanceof Array) {
+          measuredValue = measuredValue[0].value;
+        }
+
         measuredValue = parseFloat(measuredValue, 10);
+
         message += ' (' + measuredValue + ')';
         if (comparator === 'less') {
           try {
@@ -213,27 +226,27 @@ module.exports = function() {
   shouldLookTheSameAsBefore = function(elementName, callback) {
     var elementSelector = selectors(elementName);
 
-        imageTest.init({
-            screenshotRoot: process.env.TESTPATH + '/screenshots',
-            processRoot: process.env.BINARYPATH,
-            webdriver: this,
-            fileNameGetter: config('fileNameGetter') || false,
-            failOnImageDiff: config('failOnImageDiff') === undefined ? true : config('failOnImageDiff'),
-            cropImage: imageUtils.cropImage,
-            compareImages: imageUtils.compareImages,
-            createImageDiff: imageUtils.createImageDiff
-        });
-        imageTest.screenshot(elementSelector, function(err, result) {
-            if (err) {
-                return callback.fail(err);
-            }
-            if (result.status === 'firstrun') {
-                logger.notice(" First time this test with selector named:'" + elementName + "' has been run and new test cases have been created");
-                return callback();
-            } else {
-                imageTest.compare(result.value, callback);
-            }
-        });
-    };
-    this.Then(/^"([^"]*)" should look the same as before$/, shouldLookTheSameAsBefore);
+    imageTest.init({
+      screenshotRoot: process.env.TESTPATH + '/screenshots',
+      processRoot: process.env.BINARYPATH,
+      webdriver: this,
+      fileNameGetter: config('fileNameGetter') || false,
+      failOnImageDiff: config('failOnImageDiff') === undefined ? true : config('failOnImageDiff'),
+      cropImage: imageUtils.cropImage,
+      compareImages: imageUtils.compareImages,
+      createImageDiff: imageUtils.createImageDiff
+    });
+    imageTest.screenshot(elementSelector, function(err, result) {
+      if (err) {
+        return callback.fail(err);
+      }
+      if (result.status === 'firstrun') {
+        logger.notice(" First time this test with selector named:'" + elementName + "' has been run and new test cases have been created");
+        return callback();
+      } else {
+        imageTest.compare(result.value, callback);
+      }
+    });
+  };
+  this.Then(/^"([^"]*)" should look the same as before$/, shouldLookTheSameAsBefore);
 };
