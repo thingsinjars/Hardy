@@ -38,7 +38,8 @@
     "onecolor": "~2.4.0",
     "cucumber": "0.3.0",
     "webdriverio": "^2.1.0",
-    "phantomjs": "1.9.1-0",
+    "phantomjs": "~1.9.11",
+    "selenium-standalone": "~2.43.1-5",
     "win-spawn": "2.0.0",
     "colorlog": "~0.1.1",
     "gm": "1.13.3"
